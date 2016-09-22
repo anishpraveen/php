@@ -6,7 +6,8 @@ function partition(&$a,$left,$right){
    
     $i=$left;
     $j=$right;
-    $pivot=$a[($left+$right)/2];
+    //$pivot=$a[$left];
+    $pivot=$a[($left+$right)/2];    //can chose pivot based on the need
     echo "\npivot=$pivot\n";
     while($i<=$j){
         while($a[$i]<$pivot)
