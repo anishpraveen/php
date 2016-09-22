@@ -1,0 +1,4 @@
+Checks if all of the characters in the 
+provided string, are alphanumeric. 
+Returns TRUE if every character in text is 
+either a letter or a digit, FALSE otherwise. anish.mec@gmail.com . 

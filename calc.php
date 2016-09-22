@@ -8,7 +8,7 @@ $x = 100;
 $y = "100";
 //$t=time();
 echo "</br>";
-$n=1;
+$n=readline("Enter no:");
 switch ($n) {
 	case '0':
 		# code...
@@ -24,7 +24,7 @@ switch ($n) {
 		break;
 }
 
-$x = 4;
+$x = 5;
 
 do {
     echo "The number is: $x <br>";
@@ -37,4 +37,3 @@ do {
 echo "string";
 
 ?> 
-
