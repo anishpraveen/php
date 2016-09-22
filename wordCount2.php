@@ -2,10 +2,13 @@
 $file = "text.txt";
 $file_handle = fopen("text.txt", "rb");
 $text = fread($file_handle,filesize("text.txt"));
-//$parts = explode(' ', $text);
-   /* foreach ($parts as $key => $value) {
-        //echo "parts[$key]=$parts[$key] \n";
-       }*/
+$parts = explode(' ', $text);
+include "bubbleSort.php";
+$a=bsWord($a,count($parts));
+    foreach ($parts as $key => $value) {
+        echo "parts[$key]=$parts[$key] \n";
+       }
+       
 
        $i=0;
        $countWord=0;
