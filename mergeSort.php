@@ -1,5 +1,5 @@
 <?php
-
+ 
 function merge(&$a,$left,$mid,$right){
 
     $n1=floor($mid-$left+1);

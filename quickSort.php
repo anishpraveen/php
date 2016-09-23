@@ -6,8 +6,8 @@ function partition(&$a,$left,$right){
    
     $i=$left;
     $j=$right;
-    //$pivot=$a[$left];
-    $pivot=$a[($left+$right)/2];    //can chose pivot based on the need
+    $pivot=$a[$left];
+    //$pivot=$a[($left+$right)/2];    //can chose pivot based on the need
     echo "\npivot=$pivot\n";
     while($i<=$j){
         while($a[$i]<$pivot)
@@ -40,6 +40,17 @@ function qsort(&$a,$left,$right){
 return $a;
 }
 
+ $n=readline("Enter limit: ");
+    if(ctype_digit($n)!=TRUE){
+        echo"Invalid input";
+        exit();
+    }
+    $a=array();
+    for ($i=0; $i < $n; $i++) { 
+        $a[$i]=readline("a[$i]: ");
+    }
+    qsortmain($a,0,$n-1);
+
 function qsortmain(&$a,$left,$right){
    $a=qsort($a,$left,$right);
    var_dump($a);
@@ -49,5 +60,13 @@ function qsortmain(&$a,$left,$right){
     //echo "Sum=$sum\n";
     return $a;
 }
+
+
+
+
+
+
+
+
 
 ?>
