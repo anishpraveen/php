@@ -109,7 +109,7 @@ function menu(){
     } while ($ch != 0);
 }
 
-    menu();
-    
+    //menu();
+    echo "\n\n". phpinfo()."\n\n";
 
 ?>
