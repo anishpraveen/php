@@ -101,7 +101,8 @@ function menu(){
     $tid;
     $start;
     $dest;
-    $t=new ticket();
+    $count=-1;
+    $t[]=new ticket();
     $flag=0;
     $fareflag=0;
 
@@ -109,7 +110,8 @@ function menu(){
         echo"\n\nMenu\n";
         echo"Menu 1: Input passenger, station, and train\n";
         echo"Menu 2: Calculate fare.\n";
-        echo"Menu 3: Print the ticket details (including fare).";
+        echo"Menu 3: Print the ticket details (including fare).\n";
+        echo"Menu 4: Print all issued tickets.";
         $choice=readline("\nChoice: ");
         if(ctype_digit($choice)!=TRUE){
               echo("\nInput proper choice(numericals only).");
@@ -129,8 +131,9 @@ function menu(){
                          echo("\nInput proper choice(numericals only).\n");                         
                          }
                 }while(ctype_digit($n)!=TRUE);
-                
-                $t->setTicket($n,$tid,$start,$dest);
+                ++$count;
+                $t[$count]=new ticket();
+                $t[$count]->setTicket($n,$tid,$start,$dest);
                 $fareflag=0;
                 $flag=1;
                 break;
@@ -147,11 +150,11 @@ function menu(){
                              echo("\nInput proper choice(numericals only).\n");                         
                            }
                         }while(ctype_digit($n)!=TRUE);
-                    $t->setTicket($n,$tid,$start,$dest);
+                    $t[$count]->setTicket($n,$tid,$start,$dest);
                     $flag=1;
                     //break;
                 }
-                echo "\nFare: ". $t->getfare() ."\n";
+                echo "\nFare: ". $t[$count]->getfare() ."\n";
                 $fareflag=1;
                 break;
 
@@ -161,10 +164,17 @@ function menu(){
                     break;
                 }
                 if($fareflag==0){
-                    echo "\nFare: ". $t->getfare() ."\n";                    
+                    echo "\nFare: ". $t[$count]->getfare() ."\n";                    
                 }
                 echo"\nTicket Details\n";
-                $t->getTicket();
+                $t[$count]->getTicket();
+                break;
+
+            case '4':
+                 echo"\nAll Issued Ticket Details\n";
+                for ($i=0; $i <= $count; $i++) {                     
+                    $t[$i]->getTicket();
+                }
                 break;
 
             default:
