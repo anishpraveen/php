@@ -28,11 +28,6 @@ interface IStation {
 
 
 
-
-/*
-**Class contain
-** code, name  
-*/
 class station implements Istation{
     private $code,$name;
     public static $stationList=array(self::CODE_ST0=>array(self::NAME_ST0,self::DISTANCE_FROM_START_ST0),
@@ -45,7 +40,7 @@ class station implements Istation{
     public function getStationList(){
         return (self::$stationList);
         
-     }
+    }
     public function setCode($code){
         $this->code=$code;
      }
@@ -77,13 +72,19 @@ class station implements Istation{
             return self::DISTANCE_FROM_START_ST5;
        */
         return (-1);
-     }
+    }
  }
 
-/*
-**  printStation()
-**      prints complete list of Station initialized
-*/
+function stationValidation($station){
+    $st=new station();
+    $a=$st->getStationList();
+    foreach ($a as $key => $value) {      
+      if( strcasecmp($key,$station)==0)
+        return TRUE;
+      }
+    return FALSE;
+ }
+
 function printStation(){
     $st=new station();
     $a=$st->getStationList();
@@ -100,19 +101,5 @@ function printStation(){
  }
 
 
-/*
-**  stationValidation()
-**  @param=station (string)
-**      checks if input present in StationList
-*/
-function stationValidation($station){
-    $st=new station();
-    $a=$st->getStationList();
-    foreach ($a as $key => $value) {      
-      if( strcasecmp($key,$station)==0)
-        return TRUE;
-      }
-    return FALSE;
- }
 
 ?>
