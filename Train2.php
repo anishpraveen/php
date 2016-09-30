@@ -80,6 +80,17 @@ class train implements ITrain{
 
 class station implements Istation{
     private $code,$name;
+    public static $stationList=array(self::CODE_ST0=>array(self::NAME_ST0,self::DISTANCE_FROM_START_ST0),
+                    self::CODE_ST1=>array(self::NAME_ST1,self::DISTANCE_FROM_START_ST1),
+                    self::CODE_ST2=>array(self::NAME_ST2,self::DISTANCE_FROM_START_ST2),
+                    self::CODE_ST3=>array(self::NAME_ST3,self::DISTANCE_FROM_START_ST3),
+                    self::CODE_ST4=>array(self::NAME_ST4,self::DISTANCE_FROM_START_ST4),
+                    self::CODE_ST5=>array(self::NAME_ST5,self::DISTANCE_FROM_START_ST5)
+                    );
+    public function getStationList(){
+        return (self::$stationList);
+        
+    }
     public function setCode($code){
         $this->code=$code;
      }
@@ -94,7 +105,10 @@ class station implements Istation{
        return $this->name;
      }
     public function getDistanceFromStart(){
-        if(strcasecmp($this->code,self::CODE_ST0)==0)
+
+        return self::$stationList[$this->code][1];
+        //exit();
+        /*if(strcasecmp($this->code,self::CODE_ST0)==0)
             return self::DISTANCE_FROM_START_ST0;
         if(strcasecmp($this->code,self::CODE_ST1)==0)
             return self::DISTANCE_FROM_START_ST1;
@@ -106,7 +120,7 @@ class station implements Istation{
             return self::DISTANCE_FROM_START_ST4;
         if(strcasecmp($this->code,self::CODE_ST5)==0)
             return self::DISTANCE_FROM_START_ST5;
-       
+       */
         return (-1);
     }
  }
@@ -122,15 +136,22 @@ class trainlist implements ITrainList{
     }
 	public function getTrain($trainNumber){
         //$a=array();
+        $a[0]="";
+        $a[1]="";
         //var_dump($this->tlist);
         for ($i=0; $i < 4; $i++) { 
             if($trainNumber==$this->tlist[$i]->getTid()){
-                //$a[0]= $this->tlist[$i]->getTname();
-                $a= $this->tlist[$i]->getType();
+                $a[0]= $this->tlist[$i]->getTname();
+                $a[1]= $this->tlist[$i]->getType();
+                var_dump($a);
                 return $a;
             }
         }
         return (-1);
+    
+    }
+    public function getTrainList(){
+        return ($this->tlist);        
     }
  }
 
@@ -171,15 +192,23 @@ class passenger{
 
     public function getNoOfPass(){
         return $this->n;
-    }
+     }
     public function setpList($n){        
         $name;$gender;$age;
         echo "\nEnter passenger detail\n";
         $this->n=$n;
         for ($i=0; $i < $n; $i++) { 
             $name=readline("Name: ");
-            $gender=readline("Gender: ");
-            $age=readline("age: ");
+            do{
+                $gender=readline("Gender(male/female): ");
+            }while(strcasecmp($gender,"male")!=0 && strcasecmp($gender,"female")!=0 &&
+                    strcasecmp($gender,"m")!=0 && strcasecmp($gender,"f")!=0
+                    );
+           
+            
+            do{
+                $age=readline("age: ");
+            }while(ctype_digit($age)!=TRUE);
             $this->passengerList[$i]=new human($name,$gender,$age);
         }
      }
@@ -189,22 +218,29 @@ class passenger{
         echo "\nPassenger detail\n";
         for ($i=0; $i < $this->n; $i++) { 
            echo "Name: " .$this->passengerList[$i]->getName()."\n";
+           echo "Gender: ".$this->passengerList[$i]->getGender()."\n";
+           echo "Age: ".$this->passengerList[$i]->getAge()."\n";
         }
      }
      
-     public function getMale(){
+    public function getMale(){
          $male=0;
          for ($i=0; $i < $this->n; $i++) { 
-           if(strcasecmp($this->passengerList[$i]->getGender(),"male")==0 && $this->passengerList[$i]->getAge()>8)
-            $male++;
+           if((strcasecmp($this->passengerList[$i]->getGender(),"male")==0 || 
+                strcasecmp($this->passengerList[$i]->getGender(),"m")==0) && 
+                $this->passengerList[$i]->getAge()>8)
+            $male++; 
+            //echo "n=$this->n \n male=$male gen=".$this->passengerList[$i]->getGender()."\n";
         }
         return $male;
      }
 
-     public function getFeMale(){
+    public function getFeMale(){
          $female=0;
          for ($i=0; $i < $this->n; $i++) { 
-           if(strcasecmp($this->passengerList[$i]->getGender(),"female")==0 && $this->passengerList[$i]->getAge()>8)
+           if((strcasecmp($this->passengerList[$i]->getGender(),"female")==0 || 
+                strcasecmp($this->passengerList[$i]->getGender(),"f")==0) && 
+                $this->passengerList[$i]->getAge()>8)
             $female++;
         }
         return $female;
@@ -267,11 +303,13 @@ class ticket implements ITicket{
 
         $start=$this->start->getDistanceFromStart();
         $dest=$this->dest->getDistanceFromStart();
-        $dist=$dest-$start;
-        $amt=($typefare+$dist)*$n;
+        $dist=abs($dest-$start);
+        $amt=($typefare)*$n;
+        
         $male=$this->pList->getMale();
         $female=$this->pList->getFeMale();
         $kid=$n-($male+$female);
+        //echo "amt=$amt\n male=$male n=$n kid=$kid dis=$dist\n";
         $amt+= (10*$dist*$male)+(8*$dist*$female)+(5*$dist*$kid);
         $this->fee=$amt;
         return $amt;
@@ -293,30 +331,36 @@ class ticket implements ITicket{
 ** Main function executing menu
 */
 function menu(){
-    $n;
-    $tid;$tname="Rajadani";
-    $start;
-    $dest;
-    $count=-1;
-    $t[]=new ticket();
-    $flag=0;
-    $fareflag=0;
-        {
+
+    //Variable declaration
+    {
+        $n;
+        $tid;$tname="Rajadani";
+        $start;
+        $dest;
+        $count=-1;
+        $t[]=new ticket();
+        $flag=0;
+        $fareflag=0;
+        $a=array();
+     }
+    //Train list Initialisation
+    {
             $trainList=new trainlist();
             $train=new train();
-            $train->setTname("Rajadani"); $train->setType($train::TYPE_SUPERFAST);$train->setTid("001");
+            $train->setTname("Rajadani"); $train->setType($train::TYPE_SUPERFAST);$train->setTid("1");
             $trainList->addTrain($train);
-            $train->setTname("Malabar"); $train->setType($train::TYPE_EXPRESS);$train->setTid("002");
+            $train->setTname("Malabar"); $train->setType($train::TYPE_EXPRESS);$train->setTid("2");
             $trainList->addTrain($train);
-            $train->setTname("Memu"); $train->setType($train::TYPE_PASSENGER);$train->setTid("003");
+            $train->setTname("Memu"); $train->setType($train::TYPE_PASSENGER);$train->setTid("3");
             $trainList->addTrain($train);
-            $train->setTname("Shadapthi"); $train->setType($train::TYPE_SUPERFAST);$train->setTid("004");
+            $train->setTname("Shadapthi"); $train->setType($train::TYPE_SUPERFAST);$train->setTid("4");
             $trainList->addTrain($train); 
 
             //var_dump($trainList);
             //exit();
-        }
-        $a=array();
+         }
+        
     
     do{
         echo"\n\nMenu\n";
@@ -333,19 +377,45 @@ function menu(){
 
         switch ($choice) {
             case '1':
-                echo"\nEnter ticket details\n";
-                $tid=readline("Enter Train number: ");
+             case1:   echo"\nEnter ticket details\n";
+                printTrain($trainList);
+               
+                $tflag=0;
+                do{
+                    $tid=readline("\nEnter Train number from above list: ");
+                    $tflag=trainValidate($tid);
+                }while($tflag==FALSE);                 
+                
                 $a=$trainList->getTrain($tid);
                 //echo"a0=$a\n\n\n\n";
-                $type=$a;
-                $start=readline("Starting Station: ");
-                $dest=readline("Destination : ");
+               
+                $type=$a[1];
+                $tname=$a[0];
+                printStation();
+                
+                do{
+                    $start=readline("Select code from above\nStarting Station: ");
+                    $start=strtoupper($start);
+                    $sflag=stationValidation($start);
+                }while($sflag==FALSE);                
+                
+                do{
+                    $dest=readline("Destination : ");
+                    $dest=strtoupper($dest);
+                    $sflag=stationValidation($dest);
+                }while($sflag==FALSE);
+                
+                if(strcasecmp($start,$dest)>=0){
+                    echo "No train";
+                    break;
+                }
+
                 do{
                     $n=readline("Enter number of passenger: ");
-                    if(ctype_digit($n)!=TRUE){
-                         echo("\nInput proper choice(numericals only).\n");                         
+                    if(ctype_digit($n)!=TRUE || $n==0){
+                         echo("\nInput proper choice \n(numericals greater than zero only).\n");                         
                          }
-                }while(ctype_digit($n)!=TRUE);
+                }while(ctype_digit($n)!=TRUE|| $n==0);
                 ++$count;
                 $t[$count]=new ticket();
                 $t[$count]->setTicket($n,$tid,$tname,$type,$start,$dest);
@@ -355,19 +425,10 @@ function menu(){
 
             case '2':
                 if($flag==0){
-                    echo"\nEnter ticket details\n";
-                    $tid=readline("Enter Train number: ");
-                    $start=readline("Starting Station: ");
-                    $dest=readline("Destination : ");
-                    do{
-                        $n=readline("Enter number of passenger: ");
-                        if(ctype_digit($n)!=TRUE){
-                             echo("\nInput proper choice(numericals only).\n");                         
-                           }
-                        }while(ctype_digit($n)!=TRUE);
-                    $t[$count]->setTicket($n,$tid,$start,$dest);
-                    $flag=1;
-                    //break;
+                    echo"\nEnter ticket details first\n";  
+                    //Getting input values
+                    goto case1;                  
+                    break;
                 }
                 echo "\nFare: ". $t[$count]->calculateFare() ."\n";
                 $fareflag=1;
@@ -376,6 +437,8 @@ function menu(){
             case '3':
                 if($flag==0 && $fareflag==0){
                     echo"\nEnter ticket details and get fare";
+                    //Getting input values
+                    goto case1;    
                     break;
                 }
                 if($fareflag==0){
@@ -394,19 +457,58 @@ function menu(){
                 break;
 
             default:
-                # code...
+                echo"\nInvalid input\n";
                 break;
         }
 
         $ch=readline("\nContinue (yes=1/no=0): ");
     }while ($ch != 0);
-
-    
-
+  
 }
 
+function stationValidation($station){
+    $st=new station();
+    $a=$st->getStationList();
+    foreach ($a as $key => $value) {      
+      if( strcasecmp($key,$station)==0)
+        return TRUE;
+      }
+    return FALSE;
+ }
+function trainValidate($trainNumber){
+    for ($i=1; $i < 5; $i++) { 
+         if($trainNumber==$i){
+             $tflag=1;
+             return TRUE;
+         }             
+        }
+    return FALSE;
+ }
+function printStation(){
+    $st=new station();
+    $a=$st->getStationList();
+    //var_dump($a);
+    echo "Code=  Name        Distance";
+    foreach ($a as $key => $value) {
+       echo"\n$key =";
+      foreach ($a[$key] as $key2 => $value2) {
+          echo "  $value2";
+      }
+    
+    }
+    echo"\n";
+ }
 
+function printTrain(&$trainList){
+   
+   $tt=$trainList->getTrainList();
+  
+    foreach ($tt as $key => $value) {
+        echo"\n ".$tt[$key]->getTid()." " .$tt[$key]->getTname()  ;
+        
+    }
+    
+ }
 menu();
-
 
 ?>
