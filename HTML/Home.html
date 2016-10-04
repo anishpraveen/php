@@ -1,42 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <title>Home Page</title>
-
-    <!-- Bootstrap Core CSS
-    <link href="css/bootstrap.css" rel="stylesheet"> -->
-    <link href="css/theme.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 </head>
 
 <body>
+
     <div id="divMain">
-
-        <div id="divHeader" class="header row grey">
-            <h1>Reach</h1>
-
-            <ul class="container-fluid left">
-                
-            </ul>
-
-            <ul class="container-fluid">
-                <li class="left" style="float:left">FUNDRAISING POWERED BY CHARITABLE</li>
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#blog">BLOG</a></li>
-                <li><a href="#documentation">DOCUMENTAION</a></li>
+        <div id="divHeader">
+            <div>
+            <h1 id="h1Reach">REACH</h1>            
+            </div>
+            <ul>
+                <li style="float:left;"><a >FUNDRAISING POWERED BY CHARITABLE</a></li>
                 <li><a href="#about">CREATE A CAMPAIGN</a></li>
+                <li><a href="#documentation" id="aDropdown">DOCUMENTAION</a></li>
+                <li><a href="Register.php">REGISTER</a></li>
+                <li><a href="#blog">BLOG</a></li>
+                <li><a href="#home">HOME</a></li>
+
             </ul>
-
-
         </div>
-
-
-        <div id="divSlider" class="blue row">
+        <div id="divSlider" class="blue">
             <img class=" slider" src="img/sparkler-slider1-1400x480_c.jpg" alt="Slider" width="100%">
-            <h1 class="center">FUNDRAISING</h1>
+            <h1 style="text-align:center; color:white;">FUNDRAISING</h1>
             <p style="text-align:center;">Reach is a non-profit organisations and community crowdfunding websites.
             </p>
-            <button>GET STARTED</button>
+            <div id="divBtnStarted">
+            <button id="btnStarted">GET STARTED</button>
+            </div>
+        </div>
+
+        <div id="divArticle" class="grey">
+            <h2 id="h1Project">LATEST PROJECT</h2>
+
+            <div id="divArticle1" class="right">
+                <div class="ribbon"><span>SUCCESSFUL</span></div>
+                <img class="imgArt" src="img/SplitShire-4062-1800x1200-970x500.jpg" alt="Slider" width="100%">
+                <p class="pHeading">UNICEF: SYRIAN CRISIS APPEAL</p>
+                <p class="pArticle">Syria'a children have lost their homes, their security, their childhood.</p>
+                <hr align="center" color=#70777c size=1>
+                <p class="pAuthor"><a style=" opacity:0.5;">BY</a> ERIC DAAMS</p>
+            </div>
+
+            <div id="divArticle2" class="right">
+                <img class="imgArt" src="img/man-hand-garden-growth.jpg" alt="Slider" width="100%">
+                <p class="pHeading">WATERRAID: CLEAN WATER FOR REMOTE COMMUNITIES</p>
+                <p class="pArticle">Build a rainwater catchment system in a remote community.</p>
+                <hr align="center" color=#70777c size=1>
+                <p class="pAuthor"><a style=" opacity:0.5;">BY</a> ERIC DAAMS</p>
+            </div>
+
+            <div id="divArticle3" class="right">
+                <div class="ribbon2"><span>UNSUCCESSFUL</span></div>
+                <img class="imgArt" src="img/people-crowd-child-kid.jpg" alt="Slider" width="100%">
+                <p class="pHeading">The Smith Family: Winter Appeal 2015</p>
+                <p class="pArticle">Today, there are more than 638,000 Australian children living in jobless families.</p>
+                <hr align="center" color=#70777c size=1>
+                <p class="pAuthor"><a style=" opacity:0.5;">BY</a> ERIC DAAMS</p>
+            </div>
+        </div>
+
+        <div id="divFooter">
+            <div id="divLine">
+                <hr align="center" width="95%" color=white size=1>
+                <p id="pFooter">CRAFTED WITH LOVE BY STUDIO 164A</p>
+
+            </div>
         </div>
     </div>
 </body>

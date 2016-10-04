@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="css/style2.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+</head>
+
+<body>
+    <form action="formLanding.php" method="POST">
+        <div id="divMainForm">
+            <div id="divLeft" class="left">
+                First name<br> <br> Last name
+                <br><br> email
+                <br><br> password
+            </div>
+
+            <div id="divCenter" class="center">
+                :<br> <br> :
+                <br> <br>:
+                <br> <br>:
+            </div>
+
+            <div id="divRight" class="right">
+                <input type="text" placeholder="First Name" required data-validation-required-message="Please enter your name." name="firstname"><br><br>
+                <input type="text" onfocus="if(this.value == 'value') { this.value = ''; }" value="value" name="lastname"><br>                <br>
+                <input type="file" required name="test"><br> <br>
+                <input type="password" name="password">
+            </div>
+            <br> <br>
+            <div class="clearfix">
+                <button id="btnSubmit" class="">Submit</button>
+            </div>
+        </div>
+    </form>
+
+
+</body>
+
+</html>

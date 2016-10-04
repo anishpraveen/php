@@ -40,17 +40,16 @@
             font-family: Oswald, "Helvetica Neue", Helvetica, sans-serif;
         }
  
-h1 {
-	font-family: Oswald, "Helvetica Neue", Helvetica, sans-serif; 
+
+
+#h1Reach{
+    font-family: Oswald, "Helvetica Neue", Helvetica, sans-serif; 
 	font-size: 34px;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: normal;
 	color: #7bb4e0;
 	letter-spacing: 2px;	
-}
-
-#h1Reach{
     margin-left: 1%;
 }
 
@@ -71,10 +70,25 @@ textCenter{
    border: 1px white;
    padding: 3px 3px;
    color: white;
+   border: 1px solid white; 
+  /*outline: 3px solid #70777c;*/
+  border-radius: 2px;
+  
+}
+
+#divBtnStarted{
+    position: relative;
+    left: 45%;
+    align-items: center;
+    width: fit-content;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: #70777c;
 }
 
 #divSlider{
     text-align:center;
+    align-items: center;
     color: white;
     margin:auto;
     padding-bottom: 50px;
@@ -90,6 +104,12 @@ textCenter{
 }
 
 #h1Project{
+    font-family: Oswald, "Helvetica Neue", Helvetica, sans-serif; 
+	font-size: 25px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	
     margin-left: 8%;
     margin-top: 5%;
     text-align: left;
@@ -107,6 +127,7 @@ textCenter{
     border-top-right-radius: 5px;
     border-radius: 5px;
     color: grey;
+    background-color: white;
     
 }
 #divArticle1 {
@@ -119,6 +140,7 @@ textCenter{
     border-top-right-radius: 5px;
     border-radius: 5px;
     color: grey;
+    background-color: white;
     
 }
 
@@ -132,6 +154,7 @@ textCenter{
     border-top-right-radius: 5px;
     border-radius: 5px;
     color: grey;
+    background-color: white;
     
 }
 
@@ -212,10 +235,10 @@ textCenter{
 }
 .ribbon {
   position: absolute;
-  left: -5px; top: -5px;
+  left: 0px; top: 0px;
   z-index: 1;
   overflow: hidden;
-  width: 75px; height: 75px;
+  width: 90px; height: 90px;
   text-align: right;
 }
 .ribbon span {
@@ -239,38 +262,26 @@ textCenter{
   content: "";
   position: absolute; left: 0px; top: 100%;
   z-index: -1;
-  border-left: 3px solid #17A612;
-  border-right: 3px solid transparent;
-  border-bottom: 3px solid transparent;
-  border-top: 3px solid #17A612;
+  
 }
 .ribbon span::after {
   content: "";
   position: absolute; right: 0px; top: 100%;
   z-index: -1;
-  border-left: 3px solid transparent;
-  border-right: 3px solid #17A612;
-  border-bottom: 3px solid transparent;
-  border-top: 3px solid #17A612;
+  
 }
 
 
-.box {
-  width: 200px; height: 300px;
-  position: relative;
-  border: 1px solid #BBB;
-  background: #EEE;
-}
 .ribbon2 {
   position: absolute;
-  left: -5px; top: -5px;
+  left: 0px; top: 0px;
   z-index: 1;
   overflow: hidden;
   width: 75px; height: 75px;
   text-align: right;
 }
 .ribbon2 span {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: bold;
   color: #7bb4e0;
   text-transform: uppercase;
@@ -290,17 +301,56 @@ textCenter{
   content: "";
   position: absolute; left: 0px; top: 100%;
   z-index: -1;
-  border-left: 3px solid #FFFFFF;
-  border-right: 3px solid transparent;
-  border-bottom: 3px solid transparent;
-  border-top: 3px solid #FFFFFF;
 }
 .ribbon2 span::after {
   content: "";
   position: absolute; right: 0px; top: 100%;
   z-index: -1;
-  border-left: 3px solid transparent;
-  border-right: 3px solid #FFFFFF;
-  border-bottom: 3px solid transparent;
-  border-top: 3px solid #FFFFFF;
+}
+
+
+
+/*Dropdown*/
+.select {
+       
+    border-radius:3px;
+    color:#616263;
+    overflow: hidden; 
+    height: 40px;    
+    width: 240px;
+    position: relative;
+    display: block;
+}
+
+select{       
+    height: 40px;
+    padding: 5px;
+    background-color:#f3f3f3;
+    border: 0;
+    outline: none;
+    font-size: 16px;       
+    width: 240px;
+   -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.select:after {
+    content:"⌄";    
+    padding: 12px 8px;
+    position: absolute; left: 55%; top: -5px;    
+    z-index: 1;
+    text-align: center;    
+    pointer-events: none;
+    box-sizing: border-box;   
+}
+
+#aDropdown{
+   
+   top: -50px;
+}
+
+#aDropdown:after{
+    position: relative;
+    top: -4px;
+    content:"\002304";    
 }

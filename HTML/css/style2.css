@@ -1,0 +1,24 @@
+.left{
+    float: left;
+    margin-left: 2%;
+    padding-top: 2px;
+}
+
+.right{
+    float: right;
+}
+
+#divMainForm{
+    width: 50%;
+}
+
+.center{
+    float: left;
+    margin-right: 2%;
+    margin-left: 8%;
+}
+
+.clearfix{
+    clear: both;
+    overflow: 0;
+}
