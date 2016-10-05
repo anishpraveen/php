@@ -9,12 +9,13 @@
 <body>
 <h1>Hello</h1>
 <?php 
-echo 'While this is going to be parsed.'; 
+echo 'While this is going to be parsed.';
 $name=$_GET["firstname"];
 echo "$name";
 echo $_POST["firstname"];
 echo "<br><br>";
 echo $_POST["test"];
+
 ?>
 
 </body>
