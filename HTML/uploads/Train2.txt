@@ -1,0 +1,17 @@
+for ($i=0; $i < 6; $i++) { 
+           if(strcasecmp("ST4",$stlist[$i]==0))//$this->code
+            var_dump($stlist[$i]);
+       }
+        
+
+
+            $st=new station();
+    
+    $stlist=array($st::NAME_ST0=>array($st::CODE_ST0,$st::DISTANCE_FROM_START_ST0),
+                    $st::NAME_ST1=>array($st::CODE_ST1,$st::DISTANCE_FROM_START_ST1),
+                    $st::NAME_ST2=>array($st::CODE_ST2,$st::DISTANCE_FROM_START_ST2),
+                    $st::NAME_ST3=>array($st::CODE_ST3,$st::DISTANCE_FROM_START_ST3),
+                    $st::NAME_ST4=>array($st::CODE_ST4,$st::DISTANCE_FROM_START_ST4),
+                    $st::NAME_ST5=>array($st::CODE_ST5,$st::DISTANCE_FROM_START_ST5)
+                    );
+$st->getDistanceFromStart();

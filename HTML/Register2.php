@@ -5,97 +5,9 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/register.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-
-    <script type="text/javascript">
-        var checkName = /^[a-zA-Z0-9]{6,12}$/;
-        var checkEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-        var checkPassword = /^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{6,}$/;
-        
-
-        function Validate(form){
-            var username=form.username.value;
-            var password=form.password.value;
-            var confirmPassword=form.confirmPassword.value;
-            var email=form.email.value;
-            var country=form.Country.value;
-            //var nameErr = '';var emailErr = '';var passwordErr = '';var confirmPasswordErr = '';var CountryErr='';
-            document.getElementById("spanNameErr").innerHTML ="";
-            document.getElementById("spanEmailErr").innerHTML ="";
-            document.getElementById("spanPassErr").innerHTML ="";
-            document.getElementById("spanConfirmPassErr").innerHTML ="";
-
-            if(form.username.value===''||form.username.value === null){
-                //alert("Input name");
-                document.getElementById("spanNameErr").innerHTML = "<br>*Input name";                
-                return false;
-             }
-            
-            else if(!checkName.test(username)){
-                //alert("Input proper name (Only alphanumeric between 6 and 12)");
-                document.getElementById("spanNameErr").innerHTML = "<br>*Only alphanumeric between 6 and 12";
-                return false;
-            }
-
-            if(form.email.value === '' || form.email.value === null){
-               // alert("Input email");
-                document.getElementById("spanEmailErr").innerHTML = "<br>*Input email";
-                return false;
-             }
-              else if(!checkEmail.test(email)){
-                //alert("Input proper email format (abc@xyz.ac)");
-                document.getElementById("spanEmailErr").innerHTML = "<br>*Input proper email format (abc@xyz.ac)";
-                return false;
-            }
-
-            if(form.password.value ===''||form.password.value===null){
-               // alert("Input password");
-                document.getElementById("spanPassErr").innerHTML = "<br>*Input password";
-                return false;
-            }
-             else if(!checkPassword.test(password)){
-               // alert("Input proper password \n Atleast one \n1.Uppercase \n2.Lowercase \n3.Digit \n4.Special character");
-                document.getElementById("spanPassErr").innerHTML = "<br>*Input  proper password \n Atleast one \n1.Uppercase \n2.Lowercase \n3.Digit \n4.Special character";
-                return false;
-            }
-
-             
-            if(form.confirmPassword.value===''||form.confirmPassword.value===null){
-                //alert("Confirm password");
-                document.getElementById("spanConfirmPassErr").innerHTML = "<br>*Input password";
-                return false;
-            }
-            if(password !== confirmPassword){
-                //alert("Password mismatch");
-                document.getElementById("spanPassErr").innerHTML = "<br>*Password mismatch";
-                document.getElementById("spanConfirmPassErr").innerHTML = "<br>*Password mismatch";
-                return false;
-            }
-
-            if(country === 'Country'){
-                //alert("Select Countrty");
-                document.getElementById("spanCountryErr").innerHTML = "<br><br>*Select Countrty";                
-                return false;
-            }
-            
-            
-
-            //alert("working");
-            return true;
-        }
-        function DisplayState(value){
-            document.getElementById("spanCountryErr").innerHTML = "";
-            if(value==='US'){                 
-                 document.getElementById('selState').style.visibility='visible';
-                 document.getElementById('selCountry').style.margin='initial 0 0 0';
-                 document.getElementById('selState').style.margin='1% 0 1% 0';
-                }
-            if(value!=='US'){                 
-                 document.getElementById('selState').style.visibility='hidden';
-                 document.getElementById('selCountry').style.margin='initial 0 -35% 0';
-                 document.getElementById('selState').style.margin='1% 0 -35% 0';
-                }
-        }      
-        </script>
+    <script type="text/javascript" src="js/register.js" ></script>
+    <script type="text/javascript" src="js/image.js" ></script>
+    
 </head>
 
 <body>
@@ -116,7 +28,7 @@
     if (strlen($username)<6 || strlen($username)>12) {
         $nameErr = "Out of bound(6,12)";
         $flag++;
-    }
+     }
         if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
             $nameErr = "Only alphanumeric allowed";
             $flag++;
@@ -126,18 +38,18 @@
     if (empty($_POST["email"])) {
         $emailErr = "Email is required";
         $flag++;
-    } else {
+     } else {
         $email = test_input($_POST["email"]);
     }
     
     if (empty($_POST["password"])) {
         $passwordErr = "Required";
         $flag++;
-    }
+     }
     if (empty($_POST["confirmPassword"])) {
         $confirmPasswordErr = "Required";
         $flag++;
-    } else {
+     } else {
         $password = test_input($_POST["password"]);
         $confirmPassword=test_input($_POST["confirmPassword"]);
         if (strcmp($password, $confirmPassword)!=0) {
@@ -155,74 +67,140 @@
       $CountryErr = "Country is required";
     
       $flag++;
-  } else {
+    } else {
       $country = test_input($_POST["Country"]);
-  }
- echo"kjsghdkjfhskdf $flag";
+   }
+    // include_once("upload.php");
+    function imageValidate()
+        {
+                    $target_dir = "uploads/";
+                    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+                    $uploadOk = 1;
+                    $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+                // Check if image file is a actual image or fake image
+                if (isset($_POST["submit"])) {
+                    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                    if ($check !== false) {
+                        //echo "File is an image - " . $check["mime"] . ".";
+                        $uploadOk = 1;
+                    } else {
+                        echo "File is not an image.";
+                        $uploadOk = 0;
+                    }
+                }
+                // Check if file already exists
+                if (file_exists($target_file)) {
+                    //echo "Sorry, file already exists.";
+                    //$uploadOk = 0;
+                }
+                // Check file size
+                if ($_FILES["fileToUpload"]["size"] > 500000) {
+                    echo "Sorry, your file is too large.";
+                    $uploadOk = 0;
+                }
+                // Allow certain file formats
+                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "gif") {
+                    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                    $uploadOk = 0;
+                }
+                // Check if $uploadOk is set to 0 by an error
+                if ($uploadOk == 0) {
+                    echo "Sorry, your file was not uploaded.";
+                // if everything is ok, try to upload file
+                } else {
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                        echo "The file ". basename($_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                        return $target_file;
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
+                    }
+          }
+    $img=imageValidate();
+    echo $img;
+    
     if ($flag==0) {
-    //echo"flag= $flag";
+     //echo"flag= $flag";
+        
         session_start();
         $_SESSION["name"]=$username;
         $_SESSION["email"]=$email;
         $_SESSION["password"]=$password;
         $_SESSION["country"]=$country;
+        $_SESSION["img"]=$img;
        // header("Location: displayUser.php");
        $url='displayUser.php';
-       echo '<script type="text/javascript">';
-        echo 'window.location.href="'.$url.'";';
-        echo '</script>';
-        echo '<noscript>';
-        echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
-        echo '</noscript>'; exit;
+      
+     {
+        if (!headers_sent())
+         {    
+              header('Location: '.$url);
+              exit;
+          }
+        else
+           {  
+           echo '<script type="text/javascript">';
+            echo 'window.location.href="'.$url.'";';
+            echo '</script>';
+            echo '<noscript>';
+            echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+            echo '</noscript>'; exit;
+             }
+        }
+     }
     }
- }
 
-    function test_input($data)
-    {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
+    function test_input($data){
+     $data = trim($data);
+     $data = stripslashes($data);
+     $data = htmlspecialchars($data);
+     return $data;
     }
+    
 ?>
 
         <div id="divMain">
-            <div id="divHeader">
-                <div>
-                    <h1 id="h1Reach">REACH</h1>
-                </div>
-                <ul>
-                    <li style="float:left;"><a>FUNDRAISING POWERED BY CHARITABLE</a></li>
-                    <li><a href="#about">CREATE A CAMPAIGN</a></li>
-                    <li><a href="#documentation" id="aDropdown">DOCUMENTAION</a></li>
-                    <li><a href="Register.php">REGISTER</a></li>
-                    <li><a href="#blog">BLOG</a></li>
-                    <li><a href="#home">HOME</a></li>
+      <div id="divHeader">
+    <div>
+        <h1 id="h1Reach">REACH</h1>
+    </div>
+    <ul>
+        <li style="float:left;"><a>FUNDRAISING POWERED BY CHARITABLE</a></li>
+        <li><a href="#about">CREATE A CAMPAIGN</a></li>
+        <li><a href="#documentation" id="aDropdown">DOCUMENTAION</a></li>
+        <li><a href="Register.php">REGISTER</a></li>
+        <li><a href="#blog">BLOG</a></li>
+        <li><a href="#home">HOME</a></li>
 
-                </ul>
-            </div>
+    </ul>
+</div>
+<div id="divContent">
+    
+    <form id="formSubmit" name="Submitform" onsubmit="return Validate(this);" enctype="multipart/form-data" action="" method="POST">
+         <img src="img/profile.png" height="100" style="border-radius: 5px;" alt="Image preview..."><br>
 
-            <div id="divContent">
-                <form id="formSubmit" name="Submitform" onsubmit="return Validate(this);" action="" method="POST" >
-                    <input type="text" placeholder="Username" name="username" value="<?php echo $username;?>">
-                    <span id="spanNameErr" class="error"><?php echo $nameErr;?></span><br>
-                    <input type="text" placeholder="Email ID" name="email" value="<?php echo $email;?>">
-                    <span id="spanEmailErr" class="error"> <?php echo $emailErr;?></span><br>
-                    <input type="password" placeholder="Password" name="password">
-                    <span id="spanPassErr" class="error"><?php echo $passwordErr;?></span><br>
-                    <input type="password" placeholder="Confirm Password" name="confirmPassword">
-                    <span id="spanConfirmPassErr" class="error"><?php echo $confirmPasswordErr;?></span><br>
+        <input type="file" name="fileToUpload" id="fileToUpload" onchange="previewFile(this);"><br>
 
-                     
+        <input type="text" placeholder="Username" name="username" value="<?php echo $username;?>">
+        <span id="spanNameErr" class="error"><?php echo $nameErr;?></span><br>
+        <input type="text" placeholder="Email ID" name="email" value="<?php echo $email;?>">
+        <span id="spanEmailErr" class="error"> <?php echo $emailErr;?></span><br>
+        <input type="password" placeholder="Password" name="password">
+        <span id="spanPassErr" class="error"><?php echo $passwordErr;?></span><br>
+        <input type="password" placeholder="Confirm Password" name="confirmPassword">
+        <span id="spanConfirmPassErr" class="error"><?php echo $confirmPasswordErr;?></span><br>
 
-                    <select id="selCountry" style="margin-bottom:-30%;" onchange="DisplayState(value)" name="Country" class="dropdown">
+
+
+        <select id="selCountry" style="margin-bottom:-30%;" onchange="DisplayState(value)" name="Country" class="dropdown">
                     <option  value="Country" hidden value="0"  selected>Select Country</option>
                         <option  value="US">United States of America</option>
                         <option value="Canada">Canada</option>                            
-                                </select>                        
-                    <span id="spanCountryErr" class="error"><?php echo $CountryErr;?></span><br>
-                   
-                    <select style="visibility:hidden; margin-bottom:-30%; margin-top:0;" id="selState" class="dropdown"  >
+                                </select>
+        <span id="spanCountryErr" class="error"><?php echo $CountryErr;?></span><br>
+
+        <select style="visibility:hidden; margin-bottom:-30%; margin-top:0;" id="selState" class="dropdown">
                         <option value="Alabama">Alabama</option>
                         <option value="Alaska">Alaska</option>
                         <option value="Arizona">Arizona</option>
@@ -233,22 +211,22 @@
                         <option value="Delaware">Delaware</option>
                         <option value="Florida">Florida</option>
                     </select>
-                    <br>
-                    
-                    <input type='checkbox' name='thing'  checked=true value='valuable' id="thing" />
-                    <label for="thing">
-                <a id="aTerms" >Agreed Terms & Conditions</a></label>
-                    <br>
-                    <div style="margin-bottom: 10px;"></div>
-                    <input type="submit" name="submit" value="SIGN UP">
+        <br>
 
-                </form>
+        <input type='checkbox' name='thing' checked=true value='valuable' id="thing" />
+        <label for="thing">
+                 <a id="aTerms" >Agreed Terms & Conditions</a></label>
+        <br>
+        <div style="margin-bottom: 10px;"></div>
+        <input type="submit" name="submit" value="SIGN UP">
 
-                <p class="fontClass">Already joined with us?<a id="aLogin" href="#Login"> LOGIN</a></p>
-            </div>
+    </form>
 
-            <div id="divFooter">
-                <div id="divLine">
+    <p class="fontClass">Already joined with us?<a id="aLogin" href="#Login"> LOGIN</a></p>
+</div>
+
+<div id="divFooter">
+    <divid="divLine">
                     <hr align="center" width="95%" color=white size=1>
                     <p id="pFooter">CRAFTED WITH LOVE BY STUDIO 164A</p>
 
