@@ -178,9 +178,9 @@
 <div id="divContent">
     
     <form id="formSubmit" name="Submitform" onsubmit="return Validate(this);" enctype="multipart/form-data" action="" method="POST">
-         <img src="img/profile.png" height="100" style="border-radius: 5px;" alt="Image preview..."><br>
+         <img src="img/profile.png"  height="100" style="border-radius: 5px;" alt="Image preview..."><br>
 
-        <input type="file" name="fileToUpload" id="fileToUpload" onchange="previewFile(this);"><br>
+        <input type="file" accept="image/*" name="fileToUpload" id="fileToUpload" onchange="previewFile(this);"><br>
 
         <input type="text" placeholder="Username" name="username" value="<?php echo $username;?>">
         <span id="spanNameErr" class="error"><?php echo $nameErr;?></span><br>
