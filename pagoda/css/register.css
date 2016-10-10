@@ -1,0 +1,155 @@
+#divContent{
+    background-color: #7bb4e0;
+    align-content: center;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    
+}
+
+input {
+     text-decoration: none;
+            font-weight: 100;
+            font-family: Merriweather, Georgia, "Times New Roman", Times, serif;
+    text-align: center;
+    border-radius: 5px;
+    height: 30px;
+    width: 300px;
+    border-width: 0px;
+    margin-top: 10px;
+    
+}
+
+select {
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+    
+    
+}
+option{
+    text-align: justify;
+}
+
+.error {color: #FF0000;}
+
+#btnSignUp{
+    width: 300px;
+    margin-top: 10px;
+    
+}
+.dropdown select{
+  background:transparent;
+   width: 297px;
+   padding: 2px;
+   font-family:Merriweather, Georgia, "Times New Roman", Times, serif;
+   font-size:1.2em;
+   font-weight:600;
+   color:#fff;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   /*Hides the default arrows for Selects*/
+  
+    text-indent: 0.01px;
+    text-overflow: '';
+ 
+  }
+
+
+.dropdown{
+	width: 297px;
+	overflow: hidden;
+	
+	text-align: center;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	 -moz-border-radius: 4px 4px 4px 4px;
+		  border-radius: 4px 4px 4px 4px;
+	
+
+}
+
+.dropdown {
+    
+    margin-bottom: 30px;
+}
+
+select{
+     color: #70777c;
+     text-align: center;
+}
+
+select > option {
+
+  background: #D3D3D3;
+    
+  color: #70777c;
+  text-align: center;
+  align-items: center;
+}
+
+#divFooter{
+    margin: 0px;
+   
+}
+
+input[type="submit"]{
+     text-decoration: none;
+            font-weight: 100;
+            font-family: Oswald, "Helvetica Neue", Helvetica, sans-serif;
+    color: white;
+    background-color: #70777c;
+}
+
+.fontClass{
+    text-decoration: none;
+            font-weight: 100;
+            font-family: Merriweather, Georgia, "Times New Roman", Times, serif;
+            
+    color: #595e66;
+}
+
+input[type=checkbox] {
+display:none;
+
+}
+ 
+input[type=checkbox] + label
+{
+background-image: url("../a.png");
+background-repeat:no-repeat;
+height: 18px;
+width: 18px;
+
+padding: 0 0 0 0px;
+}
+input[type=checkbox]:checked + label
+{
+background-image: url("../b.png") ;
+background-repeat:no-repeat;
+height: 18px;
+width: 18px;
+
+padding: 0 0 0 0px;
+}
+#aLogin {
+    
+    color: white;
+    text-decoration: none;
+}
+label + a{
+    position: relative;
+    margin-left: 50%; 
+    padding-left: 5px; 
+    height: 18px;
+width: 18px;  
+    
+}
+
+
+#aTerms{
+    text-decoration: none;
+            font-weight: 100;
+            font-family: Merriweather, Georgia, "Times New Roman", Times, serif;
+    margin-left:2.5%; color:white;  padding-top: 15px;
+}

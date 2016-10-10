@@ -1,0 +1,13 @@
+web1:
+  version: 5.6
+  stability: production
+  shared_writable_dirs: 
+    - /HTML/uploads/  
+  # php.ini Settings
+  php_extensions:
+    - json
+    - mbstring
+    - pdo
+    - session
+    - xml
+    - mysqli
