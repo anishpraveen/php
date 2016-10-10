@@ -1,0 +1,26 @@
+/* CSS for Q&A module */
+table{
+    border-style: solid;
+    border-width: 2px;
+    border-collapse: collapse;
+    font-weight: 100;
+    font-family:Merriweather, Georgia, "Times New Roman", Times, serif;
+}
+
+table tr:nth-child(even) {
+    background-color: #7bb4e0;
+}
+table tr:nth-child(odd) {
+   background-color:#70777c;
+}
+table th {
+    background-color: #70777c;
+    color: white;
+}
+
+#pMessage{
+    color: red;
+}
+#pMessage.style {
+    color: red;
+}

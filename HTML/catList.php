@@ -21,29 +21,19 @@ include("header.php");
             * Listing Record from DB
             */
                 function listDB(){
-                $servername = "localhost";
-                $username = "root";
-                $password = "root";
-                $dbname = "QandA_DB";
-                // Create connection
-                $conn = mysqli_connect($servername, $username, $password, $dbname);
-                // Check connection
-                if (!$conn) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
+                require("connectionString.php");
+                
+               
 
-                $sql = "SELECT a.iSL, a.cQuestion as cQuestion, a.cAnswer as cAnswer
-                FROM qatable AS a, categoryList AS b, queCategory AS c
-                WHERE a.iSL = c.iQID
-                AND c.iCatID = b.iSL";
+                $sql = "SELECT iSL, cCat FROM categoryList";
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
                     $i=1;
-                    echo "<table><tr><th>SL</th><th>Question</th><th>Answer</th></tr>";
+                    echo "<table><tr><th>SL</th><th>Category</th></tr>";
                     while($row = mysqli_fetch_assoc($result)) { 
-                        echo "<tr><td>" . $i. "</td><td> " . $row["cQuestion"]. "</td><td>" . $row["cAnswer"]. "</td></tr>";
+                        echo "<tr><td>" . $i. "</td><td> " . $row["cCat"]. "</td></tr>";
                         $i++;
                     }
                     echo "</table>";
