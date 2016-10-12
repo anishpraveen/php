@@ -5,20 +5,13 @@
     <link href="css/style1.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <?php
+    include("pagepermission.php");
     include("populateCheckbox.php");
     $pMessage="";
             function addRow($cQuestion,$cAnswer){    
                 $id=-1;     
                  require("connectionString.php"); 
-                // Create connection
-                $conn = new mysqli($servername, $username, $password, $dbname);                
-                // Check connection
-                if (!$conn) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
-
-
-                
+                                
                 // prepare sql and bind parameters
                 $sql = $conn->prepare("INSERT INTO qatable (cQuestion, cAnswer) 
                 VALUES (?, ?)");

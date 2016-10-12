@@ -76,19 +76,69 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 echo "<br>";
-/*
+
+
 require("connectionString.php"); 
-$sql = "ALTER TABLE `queCategory`
-  ADD CONSTRAINT `fk_cat` FOREIGN KEY (`iCatID`) REFERENCES `categoryList` (`iSL`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_que` FOREIGN KEY (`iQID`) REFERENCES `qatable` (`iSL`) ON DELETE CASCADE;";
+
+echo "<br>";
+
+$sql = "CREATE TABLE IF NOT EXISTS `login` (
+  `iUID` int(11) NOT NULL AUTO_INCREMENT,
+  `cUsername` varchar(500) NOT NULL,
+  `cPassword` varchar(500) NOT NULL,
+  `iType` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`iUID`)
+)";
 
 if ($conn->query($sql) === TRUE) {
-    echo "queCategory altered successfully";
+    echo "login created successfully";
 } else {
-    echo "Error queCategory table: " . $conn->error;
+    echo "login creating table: " . $conn->error;
 }
 
 $conn->close();
 echo "<br>";
-*/
+
+
+require("connectionString.php"); 
+
+echo "<br>";
+
+$sql = "INSERT INTO `login` (`cUsername`, `cPassword`, `iType`) VALUES
+('root12', 'root12', 1);";
+
+if ($conn->query($sql) === TRUE) {
+    echo "login acc created successfully";
+} else {
+    echo "login acc creating table: " . $conn->error;
+}
+
+$conn->close();
+echo "<br>";
+
+
+require("connectionString.php"); 
+
+echo "<br>";
+
+$sql = "CREATE TABLE IF NOT EXISTS `userDetail` (
+  `iUID` int(11) NOT NULL,
+  `cEmail` varchar(500) NOT NULL,
+  `cCountry` varchar(500) NOT NULL,
+  `cState` varchar(500) NOT NULL,
+  `cImageURL` varchar(500) NOT NULL,
+  FOREIGN KEY (`iUID`) 
+    REFERENCES `login` (`iUID`) 
+    ON DELETE CASCADE  
+)";
+
+if ($conn->query($sql) === TRUE) {
+    echo "userDetail created successfully";
+} else {
+    echo "userDetail creating table: " . $conn->error;
+}
+
+$conn->close();
+echo "<br>";
+
 ?>

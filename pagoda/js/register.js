@@ -14,6 +14,8 @@ function Validate(form) {
     document.getElementById("spanPassErr").innerHTML = "";
     document.getElementById("spanConfirmPassErr").innerHTML = "";
 
+    
+
     if (form.username.value === '' || form.username.value === null) {
         //alert("Input name");
         document.getElementById("spanNameErr").innerHTML = "<br>*Input name";
@@ -23,6 +25,9 @@ function Validate(form) {
     else if (!checkName.test(username)) {
         //alert("Input proper name (Only alphanumeric between 6 and 12)");
         document.getElementById("spanNameErr").innerHTML = "<br>*Only alphanumeric between 6 and 12";
+        if(checkname()===false){
+            document.getElementById("spanNameErr").innerHTML = "<br>*Username taken";
+        }
         return false;
     }
 
@@ -85,3 +90,31 @@ function DisplayState(value) {
         document.getElementById('selState').style.margin = '1% 0 -35% 0';
     }
 }
+
+
+function checkname()
+            {
+            var name=document.getElementById( "username" ).value;
+                
+            if (name) {
+                $.ajax({
+                    type: 'post',
+                    url: 'check_username.php',
+                    data: {
+                        username: name,
+                    },
+                    success: function (response) {
+                        $('#name_status').html(response);
+                        if (response == "OK") {
+                            //alert("Valid");
+                            return true;
+                        }
+                        else {
+                            //alert("Username already taken");
+                            return false;
+                        }
+                    }
+                });
+            }
+            
+        }

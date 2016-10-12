@@ -11,7 +11,7 @@ function previewFile(input) {
         if (file) {
             reader.readAsDataURL(file); //reads the data as a URL
         } else {
-            preview.src = "";
+            preview.src = "img/profile.png";
         }
     }
 

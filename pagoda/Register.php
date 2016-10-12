@@ -5,9 +5,42 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/register.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
     <script type="text/javascript" src="js/register.js" ></script>
-    <script type="text/javascript" src="js/image.js" ></script>
-    
+    <script type="text/javascript" src="js/image.js"></script>
+    <script type="text/javascript">
+        function checkname()
+            {
+            var name=document.getElementById( "username" ).value;
+                
+            if (name) {
+                $.ajax({
+                    type: 'post',
+                    url: 'check_username.php',
+                    data: {
+                        username: name,
+                    },
+                    success: function (response) {
+                        $('#name_status').html(response);
+                        if (response == "OK") {
+                            alert("Valid");
+                            return true;
+                        }
+                        else {
+                            alert("Username already taken");
+                            return false;
+                        }
+                    }
+                });
+            }
+            else {
+                $('#name_status').html("");
+                return false;
+            }
+        }
+
+        </script>
 </head>
 
 <body>
@@ -129,10 +162,14 @@
         $_SESSION["password"]=$password;
         $_SESSION["country"]=$country;
         $_SESSION["img"]=$img;
+        if (strcasecmp($_POST["State"], "State")==0) 
+             $_SESSION["state"]="";
+        else
+        $_SESSION["state"]=$_POST["State"];
        // header("Location: displayUser.php");
        $url='displayUser.php';
       
-     {
+      {
         if (!headers_sent())
          {    
               header('Location: '.$url);
@@ -159,22 +196,21 @@
     }
     
 ?>
+<div id="divMain">
+	<div id="divHeader">
+		<div>
+			<h1 id="h1Reach">REACH</h1>
+		</div>
+		<ul>
+			<li style="float:left;"><a>FUNDRAISING POWERED BY CHARITABLE</a></li>
+			<li><a href="#about">CREATE A CAMPAIGN</a></li>
+			<li><a href="#documentation" id="aDropdown">DOCUMENTAION</a></li>
+			<li><a href="Register.php">REGISTER</a></li>
+			<li><a href="#blog">BLOG</a></li>
+			<li><a href="Home.html">HOME</a></li>
 
-        <div id="divMain">
-      <div id="divHeader">
-    <div>
-        <h1 id="h1Reach">REACH</h1>
-    </div>
-    <ul>
-        <li style="float:left;"><a>FUNDRAISING POWERED BY CHARITABLE</a></li>
-        <li><a href="#about">CREATE A CAMPAIGN</a></li>
-        <li><a href="#documentation" id="aDropdown">DOCUMENTAION</a></li>
-        <li><a href="Register.php">REGISTER</a></li>
-        <li><a href="#blog">BLOG</a></li>
-        <li><a href="Home.html">HOME</a></li>
-
-    </ul>
-</div>
+		</ul>
+	</div>
 <div id="divContent">
     
     <form id="formSubmit" name="Submitform" onsubmit="return Validate(this);" enctype="multipart/form-data" action="" method="POST">
@@ -182,8 +218,13 @@
 
         <input type="file" name="fileToUpload" id="fileToUpload" onchange="previewFile(this);"><br>
 
-        <input type="text" placeholder="Username" name="username" value="<?php echo $username;?>">
+        <input type="text" placeholder="Username" id="username" name="username" onblur="checkname();" value="<?php echo $username;?>">
         <span id="spanNameErr" class="error"><?php echo $nameErr;?></span><br>
+        <span id="spanError" class= "error" style="display:none;">Username is already present. </span> 
+        <span class= "success" style="display:none;">Username can be assigned. </span> 
+        <span id="confirmUsername" class="confirmUsername"></span>
+
+
         <input type="text" placeholder="Email ID" name="email" value="<?php echo $email;?>">
         <span id="spanEmailErr" class="error"> <?php echo $emailErr;?></span><br>
         <input type="password" placeholder="Password" name="password">
@@ -200,7 +241,8 @@
                                 </select>
         <span id="spanCountryErr" class="error"><?php echo $CountryErr;?></span><br>
 
-        <select style="visibility:hidden; margin-bottom:-30%; margin-top:0;" id="selState" class="dropdown">
+        <select style="visibility:hidden; margin-bottom:-30%; margin-top:0;" id="selState" name="State" class="dropdown">
+        <option  value="State" hidden value="0"  selected>Select State</option>
                         <option value="Alabama">Alabama</option>
                         <option value="Alaska">Alaska</option>
                         <option value="Arizona">Arizona</option>
@@ -222,7 +264,7 @@
 
     </form>
 
-    <p class="fontClass">Already joined with us?<a id="aLogin" href="#Login"> LOGIN</a></p>
+    <p class="fontClass">Already joined with us?<a id="aLogin" href="login.php"> LOGIN</a></p>
 </div>
 
 <div id="divFooter">

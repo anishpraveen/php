@@ -6,10 +6,9 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <?php
        $pMessage="";
-       include("pagepermission.php");
             include("populateCheckbox.php");
             include("queCategoryMySQL.php");
-             include("populateDropdown.php");
+            
         /*
         * Updating Record
         */
@@ -17,26 +16,47 @@
                 require("connectionString.php"); 
 
 
-                // sql to delete a record
+                // sql to update a record
                 $sql = $conn->prepare("UPDATE qatable SET cQuestion=?, cAnswer=? WHERE iSL=?");
                 $sql->bind_param('ssi',$cQuestion,$cAnswer,$id);
                 $id=$id;
                 if ($sql->execute() === TRUE) {
                     $pMessage= "Record updated successfully";
                 } else {
-                    $pMessage= "Error deleting record: " . $conn->error;
+                    $pMessage= "Error updating record: " . $conn->error;
                 }
 
                 $conn->close();
         }
         
-        
-        
+        function getQuestion($id){
+              
+                  require("connectionString.php"); 
+                  echo "id=$id";
+                $sql = "SELECT cQuestion, cAnswer FROM qatable where iSL=24";
+                $result = mysqli_query($conn, $sql);
 
+                // set the resulting array to associative
+                $result = mysqli_query($conn, $sql); 
+               if (mysqli_num_rows($result) > 0) {
+                    // output data of each row
+                    echo "";
+                    while($row = mysqli_fetch_assoc($result)) {
+                        echo "<option value='" . $id . "'>" . $row['cQuestion'] . "</option>";
+                    }
+                    echo "";
+                } else {
+                    echo "0 results";
+                }
+
+                mysqli_close($conn);
+            }
+        
+        
         if ($_SERVER["REQUEST_METHOD"] == "POST" ){
-            if (strcasecmp($_POST["selectQuestion"], "selectQuestion")!=0){
-                $id=$_POST["selectQuestion"];
-                updateQAtable($_POST["inputQue"],$_POST["inputAns"],$id);
+            if (1!=0){
+                //$id=$_POST["selectQuestion"];
+                updateQAtable($_POST["inputQue"],$_POST["inputAns"],$_GET["id"]);
                 include("categoryListMySQL.php");
                 require("connectionString.php");
                 
@@ -50,7 +70,7 @@
                     $i=1;
                    
                     while($row = mysqli_fetch_assoc($result)) {                        
-                        deleteQcategory($id,$row["iSL"]);
+                        deleteQcategory($_GET["id"],$row["iSL"]);
                     }
                     
                 } else {
@@ -62,7 +82,7 @@
                 if(!empty($_POST['check_list'])) {
                             foreach($_POST['check_list'] as $check) {
                                     //echo $check; 
-                                    insertQcategory($id,$check);
+                                    insertQcategory($_GET["id"],$check);
                             }
                         }
                 $pMessage="Record updated successfully";
@@ -71,23 +91,40 @@
         }
 
        
-
-        function getRow($id){
+        if ($_SERVER["REQUEST_METHOD"] == "GET" ){
+            if(isset($_GET["id"])){
+                $id=$_GET["id"];
+                $name=getQue($_GET["id"]);
+               
+                $_SESSION["updateQueID"]=$id;
+            }
+            
+        
+        }
+       
+         function getQue($id){
              require("connectionString.php");
                 
-            $sql = "SELECT iSL, cQuestion, cAnswer FROM qatable where iSL=$id";
+            $sql = "SELECT  cQuestion,cAnswer FROM qatable where iSL=$id";
             $result = mysqli_query($conn, $sql);
-
+            //echo "id=$id\n"; 
+            //var_dump($sql);
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
+                 while ($row = mysqli_fetch_assoc($result)) {
+                            $_SESSION["question"]= $row["cQuestion"];                            
+                             $_SESSION["answer"]= $row["cAnswer"];         
+                 }
+                 //echo "que  ".$_SESSION["question"];
                 return $result;
             } else {
-                echo "0 results";
+                echo "0 results val";
             }
 
             mysqli_close($conn);
             }
 
+       
        
         
      ?>
@@ -99,7 +136,7 @@
 include("header.php");
 ?>
         <div id="divContent" >
-            <li style="float:left; text-align:left; "><a href="qaHome.php">Return Home</a></li><br><br>
+            <li style="float:left; text-align:left; "><a href="qaListAll.php">Return Back</a></li><br><br>
         <h3>Edit Question Bank</h3>
         
         
@@ -107,11 +144,9 @@ include("header.php");
         <form id="formEditQA"  action="" method="POST" name="formEditQA">
             
             <label>Select Question to edit.</label><br>
-         <select id="selectQuestion" name="selectQuestion">
-            <?php populateQuestionDDL(); ?>
-            </select><br>
-                <input type="text" name="inputQue" id="inputQue" placeholder="Question" value="<?php  ?>" ><br>
-                <input type="text" name="inputAns" placeholder="Answer" id="inputAns" value="<?php  ?>" ><br>
+        
+                <input type="text" name="inputQue" id="inputQue" placeholder="Question" value="<?php echo $_SESSION["question"]; ?>" ><br>
+                <input type="text" name="inputAns" placeholder="Answer" id="inputAns" value="<?php echo   $_SESSION["answer"]; ?>" ><br>
                 <style>
                     label + a{
                     position: relative;

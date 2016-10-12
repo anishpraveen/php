@@ -1,9 +1,9 @@
 <?php
 
-$servername = "192.168.0.3";
-$username = "america";
-$password = "QvLhfUkK";
-$dbname = "gopagoda";
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "QandA_DB";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);                
 // Check connection

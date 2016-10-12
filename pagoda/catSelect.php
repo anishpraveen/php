@@ -7,7 +7,8 @@
     <?php
        $pMessage="";
        $string;
-            include("populateDropdown.php");
+       include("pagepermission.php");
+       include("populateDropdown.php");
             
             /*
             * Listing Question from DB from macthing category

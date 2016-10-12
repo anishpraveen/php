@@ -10,36 +10,29 @@
 
 <body>
 <?php 
-include("pagepermission.php");
 include("header.php");
 ?>
 <div id="divContent" >
  <li style="float:left; text-align:left; "><a href="qaHome.php">Return Home</a></li><br><br>
-  
     <?php
 
 
             /*
-            * Listing Question from DB from macthing category
+            * Listing Record from DB
             */
-                function listQue(){
-                require("connectionString.php");
-                
-               
-
-                $sql = "select a.cQuestion as Que, a.cAnswer as Ans, b.cCat from qatable as a, categoryList as b, queCategory as c
-                        where a.iSL=c.iQID
-                        and c.iCatID=4
-                        and c.iCatID=b.iSL";
+                function listDB(){
+                require("connectionString.php"); 
+                $sql = "SELECT iSL, cQuestion, cAnswer FROM qatable";
                 $result = mysqli_query($conn, $sql);
 
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
                     $i=1;
-                    echo "<table><tr><th>SL</th><th>Question</th><th>Answer</th></tr>";
-
+                    echo "<table><tr><th>SL</th><th>Question</th><th>Answer</th><th>Edit</th><th>Delete</th></tr>";
                     while($row = mysqli_fetch_assoc($result)) { 
-                        echo "<tr><td>" . $i. "</td><td> " . $row["Que"]. "</td><td> " . $row["Ans"]. "</td></tr>";
+                        echo "<tr><td>" . $i. "</td><td> " . $row["cQuestion"]. "</td><td>" . $row["cAnswer"]. "</td>";
+                        echo "<td><a href='qaEditInline.php?id=" . $row["iSL"]. "'><button >Edit</button></a></td>";
+                        echo "<td><a href='qaList.php?id=" . $row["iSL"]. "'><button >Delete</button></a></td></tr>";
                         $i++;
                     }
                     echo "</table>";
@@ -50,7 +43,7 @@ include("header.php");
                 mysqli_close($conn);
                 }
 
-        listQue()
+        listDB()
     ?>
 
 

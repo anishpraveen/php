@@ -22,19 +22,26 @@ include("header.php");
             * Listing Record from DB
             */
                 function listDB(){
-                require("connectionString.php");
-                
-               
-
-                $sql = "SELECT iSL, cCat FROM categoryList";
+                require("connectionString.php"); 
+                $sql = "SELECT iUID, cUsername, iType FROM login";
                 $result = mysqli_query($conn, $sql);
+                $userType="";
 
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
                     $i=1;
-                    echo "<table><tr><th>SL</th><th>Category</th></tr>";
+                    echo "<table cellpadding='10'><tr><th>SL</th><th>User</th><th>Type</th><th></th><th></th></tr>";
                     while($row = mysqli_fetch_assoc($result)) { 
-                        echo "<tr><td>" . $i. "</td><td> " . $row["cCat"]. "</td></tr>";
+                        if($row["iUID"]==1){
+                            continue;
+                        }
+                        if($row["iType"]==0)
+                            $userType="Student";
+                        else
+                            $userType="Maintainers";
+                        echo "<tr><td>" . $i. "</td><td> " . $row["cUsername"]. "</td><td>" . $userType . "</td>";
+                        echo "<td><a href='qaUpdateUser.php?id=" . $row["iUID"]. "'><button >Update</button></a></td>";
+                        echo "<td><a href='qaDeleteUser.php?id=" . $row["iUID"]. "'><button >Delete</button></a></td></tr>";
                         $i++;
                     }
                     echo "</table>";

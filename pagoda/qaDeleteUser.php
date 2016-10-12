@@ -8,9 +8,7 @@
        
         $pMessage="";
         include("pagepermission.php");
-        include("populateCheckbox.php");
-        include("populateDropdown.php");
-
+       
         /*
         * Deleting Record
         */
@@ -53,7 +51,7 @@ include("header.php");
         <form id="formDelete" action="" method="POST" name="formDelete">
         <label>Select Question to delete.</label><br>
             <select id="selectQuestion" name="selectQuestion">
-            <?php populateQuestionDDL(); ?>
+            
             </select><br>
             <input type="submit" name="submit" value="Delete">
         </form>

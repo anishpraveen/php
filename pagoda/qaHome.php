@@ -7,7 +7,9 @@
 </head>
 
 <body>
+
 <?php 
+include("pagepermission.php");
 include("header.php");
 ?>
         <div id="divContent" style=" padding-bottom:200px;">
@@ -43,6 +45,10 @@ include("header.php");
             <li style="padding-right:10px;"><a href="catSelect.php">Display Category Questions</a></li><br>
         </td>
 
+    </tr>
+    <tr style="color:#7bb4e0; padding:20px; height:50px; font-size:25px;">
+        <td>User Management</td>
+        <td><a style="color:#7bb4e0; padding-right:10px; " href="qaUser.php">User List</a></td>
     </tr>
 </table>
 </div>

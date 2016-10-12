@@ -6,7 +6,8 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <?php
        $pMessage="";
-            include("populateDropdown.php");
+       include("pagepermission.php");
+        include("populateDropdown.php");
         /*
         * Updating Record
         */

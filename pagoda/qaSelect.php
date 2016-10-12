@@ -7,6 +7,7 @@
     <?php
        $pMessage="";
        $string;
+       include("pagepermission.php");
             include("populateDropdown.php");
             
             /*
