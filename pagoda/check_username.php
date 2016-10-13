@@ -1,29 +1,22 @@
 <?php 
- require("connectionString.php"); 
-$host = 'localhost';
-$user = 'root';
-$pass = 'root';
+ include("connectionString.php"); 
 
-mysql_connect($host, $user, $pass);
 
-mysql_select_db('QandA_DB');
 
-if(isset($_POST['username']))
-{
- $name=$_POST['username'];
+if(isset($_POST['username'])){
+    $name=$_POST['username'];
 
- $checkdata=" SELECT cUsername FROM login WHERE cUsername='$name' ";
+    $sql=" SELECT cUsername FROM login WHERE cUsername='$name' ";
 
- $query=mysql_query($checkdata);
+    $result = mysqli_query($conn, $sql);
 
- if(mysql_num_rows($query)>0)
- {
-  echo "User Name Already Exist";
- }
- else
- {
-  echo "OK";
- }
- exit();
+    if(mysqli_num_rows($result)>0) {
+        echo "User Name Already Exist";
+    }
+    else {
+        echo "OK";
+    }
+    mysqli_close($conn);
+    exit();
 }
 ?>

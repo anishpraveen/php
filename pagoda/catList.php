@@ -32,7 +32,7 @@ include("header.php");
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
                     $i=1;
-                    echo "<table><tr><th>SL</th><th>Category</th></tr>";
+                    echo "<table cellpadding='10'><tr><th>SL</th><th>Category</th></tr>";
                     while($row = mysqli_fetch_assoc($result)) { 
                         echo "<tr><td>" . $i. "</td><td> " . $row["cCat"]. "</td></tr>";
                         $i++;

@@ -87,7 +87,8 @@ $sql = "CREATE TABLE IF NOT EXISTS `login` (
   `cUsername` varchar(500) NOT NULL,
   `cPassword` varchar(500) NOT NULL,
   `iType` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`iUID`)
+  PRIMARY KEY (`iUID`),
+  UNIQUE KEY `cUsername` (`cUsername`)
 )";
 
 if ($conn->query($sql) === TRUE) {

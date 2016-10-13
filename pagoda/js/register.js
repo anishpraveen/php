@@ -25,9 +25,7 @@ function Validate(form) {
     else if (!checkName.test(username)) {
         //alert("Input proper name (Only alphanumeric between 6 and 12)");
         document.getElementById("spanNameErr").innerHTML = "<br>*Only alphanumeric between 6 and 12";
-        if(checkname()===false){
-            document.getElementById("spanNameErr").innerHTML = "<br>*Username taken";
-        }
+       
         return false;
     }
 

@@ -15,7 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     session_destroy();
      echo "<script >";
      echo "alert('logged out');";
-    echo "</script>";  
+     echo "</script>";  
+
+     $url='login.php';
+                    echo '<script type="text/javascript">';
+                    echo 'window.location.href="'.$url.'";';
+                    echo '</script>';
+                    echo '<noscript>';
+                    echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+                    echo '</noscript>'; exit;  
     }
 
 ?>

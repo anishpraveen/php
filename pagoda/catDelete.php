@@ -15,14 +15,7 @@
         */
         function deleteRow($id){         
                  require("connectionString.php"); 
-                // Create connection
-                $conn = new mysqli($servername, $username, $password, $dbname);                
-                // Check connection
-                if (!$conn) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
-
-
+                
                 // sql to delete a record
                 $sql = $conn->prepare("DELETE FROM categoryList WHERE iSL=?");
                 $sql->bind_param('i',$id);

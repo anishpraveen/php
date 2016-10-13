@@ -20,7 +20,7 @@
         <li style="float:left;"><a>FUNDRAISING POWERED BY CHARITABLE</a></li>
         <li><a href="#about">CREATE A CAMPAIGN</a></li>
         <li><a href="#documentation" id="aDropdown">DOCUMENTAION</a></li>
-        <li><a href="logout.php">LOGOUT</a></li>
+        <li><a href="login.php">LOGIN</a></li>
         <li><a href="#blog">BLOG</a></li>
         <li><a href="Home.html">HOME</a></li>
 

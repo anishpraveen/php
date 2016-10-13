@@ -22,20 +22,27 @@
                         username: name,
                     },
                     success: function (response) {
-                        $('#name_status').html(response);
+                        
                         if (response == "OK") {
-                            alert("Valid");
+                            document.getElementById("username").style.backgroundColor='green';
+                            document.getElementById("inputSignUp").style.backgroundColor='green';
+                            document.getElementById("inputSignUp").disabled=false;
+                           
                             return true;
                         }
                         else {
-                            alert("Username already taken");
+                            
+                            document.getElementById("username").style.backgroundColor='red';
+                            document.getElementById("inputSignUp").style.backgroundColor='red';
+                            document.getElementById("inputSignUp").disabled=true;
+                            alert("Username taken");
                             return false;
                         }
                     }
                 });
             }
             else {
-                $('#name_status').html("");
+                
                 return false;
             }
         }
@@ -260,7 +267,7 @@
                  <a id="aTerms" >Agreed Terms & Conditions</a></label>
         <br>
         <div style="margin-bottom: 10px;"></div>
-        <input type="submit" name="submit" value="SIGN UP">
+        <input type="submit" id="inputSignUp" name="submit" value="SIGN UP">
 
     </form>
 

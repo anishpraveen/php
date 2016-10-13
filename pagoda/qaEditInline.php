@@ -20,43 +20,24 @@
                 $sql = $conn->prepare("UPDATE qatable SET cQuestion=?, cAnswer=? WHERE iSL=?");
                 $sql->bind_param('ssi',$cQuestion,$cAnswer,$id);
                 $id=$id;
+                $flag=false;
                 if ($sql->execute() === TRUE) {
                     $pMessage= "Record updated successfully";
+                    $flag=true;
                 } else {
                     $pMessage= "Error updating record: " . $conn->error;
                 }
 
                 $conn->close();
+                return $flag;
         }
         
-        function getQuestion($id){
-              
-                  require("connectionString.php"); 
-                  echo "id=$id";
-                $sql = "SELECT cQuestion, cAnswer FROM qatable where iSL=24";
-                $result = mysqli_query($conn, $sql);
-
-                // set the resulting array to associative
-                $result = mysqli_query($conn, $sql); 
-               if (mysqli_num_rows($result) > 0) {
-                    // output data of each row
-                    echo "";
-                    while($row = mysqli_fetch_assoc($result)) {
-                        echo "<option value='" . $id . "'>" . $row['cQuestion'] . "</option>";
-                    }
-                    echo "";
-                } else {
-                    echo "0 results";
-                }
-
-                mysqli_close($conn);
-            }
         
         
         if ($_SERVER["REQUEST_METHOD"] == "POST" ){
             if (1!=0){
                 //$id=$_POST["selectQuestion"];
-                updateQAtable($_POST["inputQue"],$_POST["inputAns"],$_GET["id"]);
+                $flag=updateQAtable($_POST["inputQue"],$_POST["inputAns"],$_GET["id"]);
                 include("categoryListMySQL.php");
                 require("connectionString.php");
                 
@@ -73,7 +54,7 @@
                         deleteQcategory($_GET["id"],$row["iSL"]);
                     }
                     
-                } else {
+                 } else {
                     echo "0 results";
                 }
 
@@ -85,13 +66,24 @@
                                     insertQcategory($_GET["id"],$check);
                             }
                         }
+                if($flag){
+                    $url='qaListAll.php';
+                    echo '<script type="text/javascript">';
+                    echo 'window.location.href="'.$url.'";';
+                    echo '</script>';
+                    echo '<noscript>';
+                    echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+                    echo '</noscript>'; exit;  
+                
+                    }
                 $pMessage="Record updated successfully";
             }
         
         }
 
        
-        if ($_SERVER["REQUEST_METHOD"] == "GET" ){
+        if ($_SERVER["REQUEST_METHOD"] == "GET" )
+        {
             if(isset($_GET["id"])){
                 $id=$_GET["id"];
                 $name=getQue($_GET["id"]);
@@ -105,17 +97,27 @@
          function getQue($id){
              require("connectionString.php");
                 
-            $sql = "SELECT  cQuestion,cAnswer FROM qatable where iSL=$id";
+            $sql = "SELECT  cQuestion,cAnswer,iCatID
+                    FROM qatable as a
+                    left join queCategory
+                    on iQID=a.iSL
+                    where a.iSL=$id";
             $result = mysqli_query($conn, $sql);
             //echo "id=$id\n"; 
             //var_dump($sql);
+            $string="<script type='text/javascript'>";
+            $script="document.getElementById('in).checked=true;";
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                  while ($row = mysqli_fetch_assoc($result)) {
                             $_SESSION["question"]= $row["cQuestion"];                            
-                             $_SESSION["answer"]= $row["cAnswer"];         
+                             $_SESSION["answer"]= $row["cAnswer"];   
+                             $string.= "document.getElementById(".$row["iCatID"] ." ).checked=true;";
                  }
                  //echo "que  ".$_SESSION["question"];
+                 $string.='</script>';
+                 $_SESSION["CheckboxSelect"]=$string;
+                 //var_dump($_SESSION["CheckboxSelect"]);
                 return $result;
             } else {
                 echo "0 results val";
@@ -137,16 +139,15 @@ include("header.php");
 ?>
         <div id="divContent" >
             <li style="float:left; text-align:left; "><a href="qaListAll.php">Return Back</a></li><br><br>
-        <h3>Edit Question Bank</h3>
+        <h3><br><h3>Question</h3></h3>
         
         
 
         <form id="formEditQA"  action="" method="POST" name="formEditQA">
             
-            <label>Select Question to edit.</label><br>
-        
-                <input type="text" name="inputQue" id="inputQue" placeholder="Question" value="<?php echo $_SESSION["question"]; ?>" ><br>
-                <input type="text" name="inputAns" placeholder="Answer" id="inputAns" value="<?php echo   $_SESSION["answer"]; ?>" ><br>
+            
+                <input type="text" name="inputQue" id="inputQue" placeholder="Question" value="<?php if(isset($_SESSION["question"])) echo $_SESSION["question"]; ?>" ><br>
+                <input type="text" name="inputAns" placeholder="Answer" id="inputAns" value="<?php if(isset($_SESSION["answer"])) echo   $_SESSION["answer"]; ?>" ><br>
                 <style>
                     label + a{
                     position: relative;
@@ -167,7 +168,12 @@ include("header.php");
                        text-align: left;
                    }
                     </style>
-                <?php populateCategoryCB() ?>
+                <?php populateCategoryCB() ;
+                //getQue($_GET["id"]);
+                 //session_start();
+                 if(isset($_SESSION["CheckboxSelect"]))
+                   echo $_SESSION["CheckboxSelect"];
+                ?>
                 <input type="submit"  id="inUpdate" value="Update" >
             </form>
             <p id="pMessage"><?php  echo $pMessage;?></p>

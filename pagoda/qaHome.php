@@ -23,7 +23,7 @@ include("header.php");
                 <li style="float:left; text-align:left; "><a href="qaAdd.php">Add Q&A</a></li><br>
                 <li style="float:left; text-align:left; "><a href="qaEdit.php">Edit Q&A</a></li><br>
                 <li style="float:left; text-align:left; "><a href="qaDelete.php">Delete Q&A</a></li><br><br>
-                
+                <li style="float:left; text-align:left; "><a href="qaListAll.php">Q&A Grid View</a></li><br>
             </ol>
         </td>
         <td style="background-color: #7bb4e0;">
@@ -33,7 +33,7 @@ include("header.php");
                 <li><a href="catAdd.php">Add Category</a></li><br>
                 <li><a href="catEdit.php">Edit Category</a></li><br>
                 <li><a href="catDelete.php">Delete Category</a></li><br>
-                
+                <li><a href="catListAll.php">Category Grid View</a></li><br>
             </ol>
         </td>
     </tr>

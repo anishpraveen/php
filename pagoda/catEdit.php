@@ -11,7 +11,7 @@
         /*
         * Updating Record
         */
-        function updateQAtable($cCat,$id,$cDesc = ""){
+        function updateCatTable($cCat,$id,$cDesc = ""){
                  require("connectionString.php");
                
 
@@ -31,7 +31,7 @@
         
         if ($_SERVER["REQUEST_METHOD"] == "POST" ){
             if (strcasecmp($_POST["selectCategory"], "selectCategory")!=0){
-                updateQAtable($_POST["inputCat"],$_POST["selectCategory"],$_POST["inputDesc"]);
+                updateCatTable($_POST["inputCat"],$_POST["selectCategory"],$_POST["inputDesc"]);
                 $pMessage="Record updated successfully";
             }
             else{

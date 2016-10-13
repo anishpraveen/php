@@ -30,7 +30,7 @@ include("header.php");
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
                     $i=1;
-                    echo "<table cellpadding='10'><tr><th>SL</th><th>User</th><th>Type</th><th></th><th></th></tr>";
+                    echo "<table cellpadding='10'><tr><th>SL</th><th>User</th><th>Type</th><th>Edit</th><th>Delete</th></tr>";
                     while($row = mysqli_fetch_assoc($result)) { 
                         if($row["iUID"]==1){
                             continue;
@@ -40,8 +40,8 @@ include("header.php");
                         else
                             $userType="Maintainers";
                         echo "<tr><td>" . $i. "</td><td> " . $row["cUsername"]. "</td><td>" . $userType . "</td>";
-                        echo "<td><a href='qaUpdateUser.php?id=" . $row["iUID"]. "'><button >Update</button></a></td>";
-                        echo "<td><a href='qaDeleteUser.php?id=" . $row["iUID"]. "'><button >Delete</button></a></td></tr>";
+                        echo "<td><a href='qaUpdateUser.php?id=" . $row["iUID"]. "'><img src='https://maxcdn.icons8.com/windows8/PNG/26/Editing/edit-26.png' width='26'></a></td>";
+                        echo "<td><a href='qaDeleteUser.php?id=" . $row["iUID"]. "'><img src='https://maxcdn.icons8.com/windows8/PNG/26/Industry/trash-26.png' width='26'></a></td></tr>";
                         $i++;
                     }
                     echo "</table>";

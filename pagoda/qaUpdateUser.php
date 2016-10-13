@@ -47,6 +47,13 @@
             //echo $_SESSION["updateUserID"];
             //echo 'type  '.$_POST["selectType"];
             updateUser($_SESSION["updateUserID"],$_POST["selectType"]);
+                    $url='qaUser.php';
+                    echo '<script type="text/javascript">';
+                    echo 'window.location.href="'.$url.'";';
+                    echo '</script>';
+                    echo '<noscript>';
+                    echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+                    echo '</noscript>'; exit;  
         }
        
 
