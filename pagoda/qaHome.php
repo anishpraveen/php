@@ -50,6 +50,11 @@ include("header.php");
         <td>User Management</td>
         <td><a style="color:#7bb4e0; padding-right:10px; " href="qaUser.php">User List</a></td>
     </tr>
+    <tr style="color:#7bb4e0; padding:20px; height:50px; font-size:25px;">
+        <td colspan="2">
+            <a style="color:grey; padding-right:10px; " href="search.php">Search</a></td>
+        
+    </tr>
 </table>
 </div>
 <?php 

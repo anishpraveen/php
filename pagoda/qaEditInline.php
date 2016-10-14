@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <?php
        $pMessage="";
+       include("pagepermission.php");
             include("populateCheckbox.php");
             include("queCategoryMySQL.php");
             
