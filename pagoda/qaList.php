@@ -54,10 +54,21 @@ include("header.php");
                         if (mysqli_num_rows($result) > 0) {
                             // output data of each row
                             $i=1;
-                            echo "<table><tr><th>SL</th><th>Question</th><th>Answer</th></tr>";
+                            echo "<table><tr><th>SL</th><th>Question</th><th>Answer</th><th>Category</th></tr>";
                             while($row = mysqli_fetch_assoc($result)) { 
-                                echo "<tr><td>" . $i. "</td><td> " . $row["cQuestion"]. "</td><td>" . $row["cAnswer"]. "</td></tr>";
+                                echo "<tr><td>" . $i. "</td><td> " . $row["cQuestion"]. "</td><td>" . $row["cAnswer"]. "</td>";
                                 $i++;
+                                $sql = "select cQuestion, cAnswer, group_concat(b.cCat) as Category
+                                        from qatable as a 
+                                        inner join queCategory as c
+                                            on c.iQID=a.iSL
+                                        inner join categoryList as b
+                                            on c.iCatID=b.iSL
+                                        where a.iSL= ". $row["iSL"];
+                                $result2 = mysqli_query($conn, $sql);
+                                while($row2 = mysqli_fetch_assoc($result2)){
+                                    echo "<td>" .$row2["Category"]. "</td></tr>";
+                                }
                             }
                             //$paginationCtrls=paginationCtrl();
                             /*echo "<tr><td colspan='3'>". $paginationCtrls . "</td></tr>";
@@ -136,7 +147,7 @@ include("header.php");
                         }
                     }
                     listDB($limit);
-                    echo "<tr><td colspan='3'>". $paginationCtrls . "</td></tr>";
+                    echo "<tr><td colspan='4'>". $paginationCtrls . "</td></tr>";
                     echo "</table>";
                     //return $paginationCtrls;
                 }

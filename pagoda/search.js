@@ -112,7 +112,7 @@ function getQuestions(text) {
                 var jsonOptions = JSON.parse(request.responseText);
                 //var x = document.getElementById("myDIV").childElementCount;
                 var i = 0;
-                var x = event.which || event.keyCode;
+                //var x = event.which || event.keyCode;
                 // alert(x);
                 //clearChildren('json-datalist');
                 //alert(jsonOptions);

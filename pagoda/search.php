@@ -12,11 +12,11 @@
 
 <body>
 <?php 
-
+include("pagepermission.php");
 include("header.php");
 ?>
 	<div id="divContent">
-
+		<li style="float:left; text-align:left; "><a href="qaHome.php">Return Home</a></li><br><br>
 		<form>
 			<h3>Search</h3>
 
