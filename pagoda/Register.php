@@ -52,68 +52,89 @@
 
 <body>
 <?php 
+    include_once "class/ClassValidation.php";
     // define variables and set to empty values
-      $nameErr = $emailErr = $passwordErr = $confirmPasswordErr = $CountryErr="";
+      $nameErr = $emailErr = $passwordErr = $confirmPasswordErr = $CountryErr= $imgErr = "";
       $username = $email = $password = $confirmPassword = $country = "";
     $flag=0;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
      if (empty($_POST["username"])) {
-        $nameErr = "Name is required";
+        //$nameErr = "Name is required";
         $flag++;
-     } else {
-        $username = ($_POST["username"]);
-    // check if name only contains letters and whitespace
-
-    if (strlen($username)<6 || strlen($username)>12) {
-        $nameErr = "Out of bound(6,12)";
-        $flag++;
+      } else {
+         $username = ($_POST["username"]);
      }
-        if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-            $nameErr = "Only alphanumeric allowed";
-            $flag++;
-        }
+        
+    $validator = new UsernameValidator();
+    if (!$validator->isValid($username)){            
+        $nameErr=$validator->getMessage();
+        $flag++;
     }
+    
+    
   
-    if (empty($_POST["email"])) {
-        $emailErr = "Email is required";
+    if (empty($_POST["email"])) {       
         $flag++;
      } else {
         $email = test_input($_POST["email"]);
     }
-    
-    if (empty($_POST["password"])) {
-        $passwordErr = "Required";
+    $validator = new EmailValidator();
+    if (!$validator->isValid($email)){            
+        $emailErr=$validator->getMessage();
         $flag++;
-     }
-    if (empty($_POST["confirmPassword"])) {
-        $confirmPasswordErr = "Required";
-        $flag++;
-     } else {
-        $password = test_input($_POST["password"]);
-        $confirmPassword=test_input($_POST["confirmPassword"]);
-        if (strcmp($password, $confirmPassword)!=0) {
-            $passwordErr = "Password Mismatch";
-            $flag++;
-        }
-    
-        if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,12}$/', $password)) {
-            $passwordErr ="the password does not meet the requirements!";
-            $flag++;
-        }
     }
+
+    if (empty($_POST["password"])) {
+        //$passwordErr = "Required..";
+        $flag++;
+     }else{
+         $password = test_input($_POST["password"]);
+     }
+     $validator = new PasswordValidator();
+    if (!$validator->isValid($password)){            
+        $passwordErr=$validator->getMessage();
+        $flag++;
+    }
+    if (empty($_POST["confirmPassword"])) {
+        //$confirmPasswordErr = "Required..";
+        $flag++;
+     }else{
+         $confirmPassword=test_input($_POST["confirmPassword"]);
+     } 
+      $validator = new PasswordValidator();
+    if (!$validator->isValid($confirmPassword)){            
+        $confirmPasswordErr=$validator->getMessage();
+        $flag++;
+    }
+     if(strcmp($passwordErr,"")==0){
+         $validator = new IdenticalValidator();
+         if (!$validator->isValid($password,$confirmPassword)){
+             $confirmPasswordErr=$validator->getMessage();
+             $passwordErr=$validator->getMessage();
+             $flag++;
+         }                       
+     }
+
     //echo "dd=".empty($_POST["Country"]);
-   if (strcasecmp($_POST["Country"], "Country")==0) {
-      $CountryErr = "Country is required";
-    
+   if (empty($_POST["Country"])) {
+      //$CountryErr = "Country is required";    
       $flag++;
     } else {
       $country = test_input($_POST["Country"]);
    }
+   $validator = new NotEmptyValidator();
+    if (!$validator->isValid($country)){
+        $CountryErr=$validator->getMessage();        
+        $flag++;
+    }  
     // include_once("upload.php");
     function imageValidate()
         {
+            $img = "img/profile.png";
+            if(!empty($_FILES["fileToUpload"]["name"])){
                     $target_dir = "uploads/";
+                    
                     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
                     $uploadOk = 1;
                     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
@@ -156,9 +177,15 @@
                         echo "Sorry, there was an error uploading your file.";
                     }
                     }
+            }
+            else{
+                $imgErr= "No image";
+                
+                return $img;
+            }
           }
     $img=imageValidate();
-    echo $img;
+    //echo $img;
     
     if ($flag==0) {
      //echo"flag= $flag";
@@ -223,21 +250,22 @@
     <form id="formSubmit" name="Submitform" onsubmit="return Validate(this);" enctype="multipart/form-data" action="" method="POST">
          <img src="img/profile.png" height="100" style="border-radius: 5px;" alt="Image preview..."><br>
 
-        <input type="file" name="fileToUpload" id="fileToUpload" onchange="previewFile(this);"><br>
-
+        <input type="file"  src="img/profile.png" name="fileToUpload" id="fileToUpload" onchange="previewFile(this);"><br>
+        <span id="spanImgErr" class="error"><?php if ($_SERVER["REQUEST_METHOD"] == "POST") echo $imgErr;?></span>
+        
         <input type="text" placeholder="Username" id="username" name="username" onblur="checkname();" value="<?php echo $username;?>">
-        <span id="spanNameErr" class="error"><?php echo $nameErr;?></span><br>
+        <span id="spanNameErr" class="error"><?php if ($_SERVER["REQUEST_METHOD"] == "POST") echo "</br>". $nameErr;?></span><br>
         <span id="spanError" class= "error" style="display:none;">Username is already present. </span> 
         <span class= "success" style="display:none;">Username can be assigned. </span> 
         <span id="confirmUsername" class="confirmUsername"></span>
 
 
         <input type="text" placeholder="Email ID" name="email" value="<?php echo $email;?>">
-        <span id="spanEmailErr" class="error"> <?php echo $emailErr;?></span><br>
+        <span id="spanEmailErr" class="error"> <?php if ($_SERVER["REQUEST_METHOD"] == "POST") echo "</br>".$emailErr;?></span><br>
         <input type="password" placeholder="Password" name="password">
-        <span id="spanPassErr" class="error"><?php echo $passwordErr;?></span><br>
+        <span id="spanPassErr" class="error"><?php if ($_SERVER["REQUEST_METHOD"] == "POST") echo "</br>".$passwordErr;?></span><br>
         <input type="password" placeholder="Confirm Password" name="confirmPassword">
-        <span id="spanConfirmPassErr" class="error"><?php echo $confirmPasswordErr;?></span><br>
+        <span id="spanConfirmPassErr" class="error"><?php if ($_SERVER["REQUEST_METHOD"] == "POST") echo "</br>".$confirmPasswordErr;?></span><br>
 
 
 
@@ -246,7 +274,7 @@
                         <option  value="US">United States of America</option>
                         <option value="Canada">Canada</option>                            
                                 </select>
-        <span id="spanCountryErr" class="error"><?php echo $CountryErr;?></span><br>
+        <span id="spanCountryErr" class="error"><?php if ($_SERVER["REQUEST_METHOD"] == "POST") echo "</br></br>".$CountryErr;?></span><br>
 
         <select style="visibility:hidden; margin-bottom:-30%; margin-top:0;" id="selState" name="State" class="dropdown">
         <option  value="State" hidden value="0"  selected>Select State</option>

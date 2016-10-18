@@ -125,7 +125,7 @@
                                 $sql = $conn->prepare("INSERT INTO userDetail (iUID, cEmail, cCountry, cState, cImageURL) 
                                     VALUES ( ?, ?, ?, ?, ?)");
                                 $sql->bind_param('issss', $id,$cEmail,$cCountry,$cState,$cImageURL);
-                            
+                                
                                 
                                 // insert a row                
                                 if ($sql->execute() === TRUE) {
@@ -137,7 +137,7 @@
                                 echo "</script>";
                                     
                                 } else {
-                                   // echo "Error Adding record: " . $conn->error;
+                                    echo "Error Adding record: " . $conn->error;
                                     echo "<script >";
                                 echo "alert(".$pMessage.");";
                                 echo "</script>";
