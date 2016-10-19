@@ -9,6 +9,7 @@
 
     <script type="text/javascript" src="js/register.js" ></script>
     <script type="text/javascript" src="js/image.js"></script>
+  
     <script type="text/javascript">
         function checkname()
             {
@@ -238,13 +239,14 @@
 		<ul>
 			<li style="float:left;"><a>FUNDRAISING POWERED BY CHARITABLE</a></li>
 			<li><a href="#about">CREATE A CAMPAIGN</a></li>
-			<li><a href="#documentation" id="aDropdown">DOCUMENTAION</a></li>
-			<li><a href="Register.php">REGISTER</a></li>
+			<li><a href="#documentation" id="aDropdown">DOCUMENTAION</a>             
+            </li>
+			<li><a href="login.php">LOGIN</a></li>
 			<li><a href="#blog">BLOG</a></li>
 			<li><a href="Home.html">HOME</a></li>
 
 		</ul>
-	</div>
+        
 <div id="divContent">
     
     <form id="formSubmit" name="Submitform" onsubmit="return Validate(this);" enctype="multipart/form-data" action="" method="POST">
@@ -310,7 +312,7 @@
                 </div>
             </div>
         </div>
-
+ 
 </body>
 
 </html>
