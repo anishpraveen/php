@@ -67,71 +67,70 @@
          $username = ($_POST["username"]);
      }
         
-    $validator = new UsernameValidator();
-    if (!$validator->isValid($username)){            
+        $validator = new UsernameValidator();
+        if (!$validator->isValid($username)){            
         $nameErr=$validator->getMessage();
         $flag++;
-    }
+        }
     
     
   
-    if (empty($_POST["email"])) {       
+        if (empty($_POST["email"])) {       
         $flag++;
-     } else {
-        $email = test_input($_POST["email"]);
-    }
-    $validator = new EmailValidator();
-    if (!$validator->isValid($email)){            
-        $emailErr=$validator->getMessage();
-        $flag++;
-    }
+        } else {
+            $email = test_input($_POST["email"]);
+            }
+            $validator = new EmailValidator();
+            if (!$validator->isValid($email)){            
+            $emailErr=$validator->getMessage();
+            $flag++;
+            }
 
-    if (empty($_POST["password"])) {
+        if (empty($_POST["password"])) {
         //$passwordErr = "Required..";
         $flag++;
-     }else{
-         $password = test_input($_POST["password"]);
-     }
-     $validator = new PasswordValidator();
-    if (!$validator->isValid($password)){            
+        }else{
+            $password = test_input($_POST["password"]);
+        }
+        $validator = new PasswordValidator();
+        if (!$validator->isValid($password)){            
         $passwordErr=$validator->getMessage();
         $flag++;
-    }
-    if (empty($_POST["confirmPassword"])) {
+        }
+        if (empty($_POST["confirmPassword"])) {
         //$confirmPasswordErr = "Required..";
         $flag++;
-     }else{
-         $confirmPassword=test_input($_POST["confirmPassword"]);
-     } 
-      $validator = new PasswordValidator();
-    if (!$validator->isValid($confirmPassword)){            
+        }else{
+            $confirmPassword=test_input($_POST["confirmPassword"]);
+        } 
+       $validator = new PasswordValidator();
+        if (!$validator->isValid($confirmPassword)){            
         $confirmPasswordErr=$validator->getMessage();
         $flag++;
-    }
-     if(strcmp($passwordErr,"")==0){
-         $validator = new IdenticalValidator();
-         if (!$validator->isValid($password,$confirmPassword)){
-             $confirmPasswordErr=$validator->getMessage();
-             $passwordErr=$validator->getMessage();
-             $flag++;
-         }                       
-     }
+        }
+        if(strcmp($passwordErr,"")==0){
+            $validator = new IdenticalValidator();
+            if (!$validator->isValid($password,$confirmPassword)){
+                $confirmPasswordErr=$validator->getMessage();
+                $passwordErr=$validator->getMessage();
+                $flag++;
+            }                       
+        }
 
-    //echo "dd=".empty($_POST["Country"]);
-   if (empty($_POST["Country"])) {
-      //$CountryErr = "Country is required";    
-      $flag++;
-    } else {
-      $country = test_input($_POST["Country"]);
-   }
-   $validator = new NotEmptyValidator();
-    if (!$validator->isValid($country)){
-        $CountryErr=$validator->getMessage();        
+        //echo "dd=".empty($_POST["Country"]);
+        if (empty($_POST["Country"])) {
+        //$CountryErr = "Country is required";    
         $flag++;
-    }  
-    // include_once("upload.php");
-    function imageValidate()
-        {
+            } else {
+                $country = test_input($_POST["Country"]);
+            }
+        $validator = new NotEmptyValidator();
+        if (!$validator->isValid($country)){
+            $CountryErr=$validator->getMessage();        
+            $flag++;
+            }  
+        // include_once("upload.php");
+        function imageValidate(){
             $img = "img/profile.png";
             if(!empty($_FILES["fileToUpload"]["name"])){
                     $target_dir = "uploads/";
@@ -185,42 +184,42 @@
                 return $img;
             }
           }
-    $img=imageValidate();
-    //echo $img;
+        $img=imageValidate();
+        //echo $img;
     
-    if ($flag==0) {
-     //echo"flag= $flag";
+        if ($flag==0) {
+            //echo"flag= $flag";
         
-        session_start();
-        $_SESSION["name"]=$username;
-        $_SESSION["email"]=$email;
-        $_SESSION["password"]=$password;
-        $_SESSION["country"]=$country;
-        $_SESSION["img"]=$img;
-        if (strcasecmp($_POST["State"], "State")==0) 
-             $_SESSION["state"]="";
-        else
-        $_SESSION["state"]=$_POST["State"];
-       // header("Location: displayUser.php");
-       $url='displayUser.php';
-      
-      {
-        if (!headers_sent())
-         {    
-              header('Location: '.$url);
-              exit;
-          }
-        else
-           {  
-           echo '<script type="text/javascript">';
-            echo 'window.location.href="'.$url.'";';
-            echo '</script>';
-            echo '<noscript>';
-            echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
-            echo '</noscript>'; exit;
-             }
+            session_start();
+            $_SESSION["name"]=$username;
+            $_SESSION["email"]=$email;
+            $_SESSION["password"]=$password;
+            $_SESSION["country"]=$country;
+            $_SESSION["img"]=$img;
+            if (strcasecmp($_POST["State"], "State")==0) 
+                $_SESSION["state"]="";
+            else
+            $_SESSION["state"]=$_POST["State"];
+            // header("Location: displayUser.php");
+            $url='displayUser.php';
+            
+            {
+                if (!headers_sent())
+                {    
+                    header('Location: '.$url);
+                    exit;
+                }
+                else
+                {  
+                echo '<script type="text/javascript">';
+                    echo 'window.location.href="'.$url.'";';
+                    echo '</script>';
+                    echo '<noscript>';
+                    echo '<meta http-equiv="refresh" content="0;url='.$url.'" />';
+                    echo '</noscript>'; exit;
+                    }
+                }
         }
-     }
     }
 
     function test_input($data){
