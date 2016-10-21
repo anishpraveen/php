@@ -1,5 +1,6 @@
 <?php
   function call($controller, $action) {
+    //echo ('controllers/' . $controller . '_controller.php'); echo ' '.  $action.'\n ';   
     require_once('controllers/' . $controller . '_controller.php');
 
     switch($controller) {
@@ -11,6 +12,10 @@
         require_once('models/post.php');
         $controller = new PostsController();
       break;
+      case 'login':   
+        require_once('models/user.php');
+        $controller = new LoginController();
+      break;
     }
 
     $controller->{ $action }();
@@ -18,7 +23,8 @@
 
   // we're adding an entry for the new controller and its actions
   $controllers = array('pages' => ['home', 'error'],
-                       'posts' => ['index', 'show']);
+                       'posts' => ['index', 'show'],
+                       'login'=> ['login','success','invalid','check']);
 
   if (array_key_exists($controller, $controllers)) {
     if (in_array($action, $controllers[$controller])) {
